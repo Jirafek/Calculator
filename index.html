@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Calendar</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="squere grey"></div>
+            <p class="header-name">Календарь</p>
+            <div class="header-menu">
+                <div class="menu_today d-h grey">Сегодня</div>
+                <div class="menu_day d-h grey"></div>
+                <div class="menu_number d-h grey"></div>
+                <div class="menu_full d-h grey"></div>
+            </div>
+        </header>
+        <div class="arrows">
+            <i class="arrow_left"></i>
+            <i class="arrow_right"></i>
+        </div>
+        <main class="main">
+            <div class="modal_window"></div>
+            <div class="high_menu">
+                <div class="day_name"></div>
+                <div class="high_menu-state"></div>
+            </div>
+            <hr class="main-hr">
+            <div class="low_menu">
+                <div class="time-state"></div>
+                <div class="low_menu-state"></div>
+                <div class="time-block"></div>
+            </div>
+        </main>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
