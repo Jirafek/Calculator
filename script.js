@@ -5,6 +5,7 @@ const arrowRight = document.querySelector('.arrow_right');
 const arrowLeft = document.querySelector('.arrow_left');
 const modal_win = document.querySelector('.modal_window');
 const time_block = document.querySelector('.time-block');
+const today_btn = document.querySelector('.menu_today');
 const main = document.querySelector('main');
 const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
 const color_classes = ['green_back', 'blue_back', 'orange_back', 'red_back', 'brown_back', 'pink_back', 'blur_back', 'yellow_back'];
@@ -19,6 +20,7 @@ const cur_day = days[date.getDay()];
 const cur_date = date.getDate();
 let page = 0;
 let page_obj = {};
+let exe_text_obj = {};
 
 function defaultStart() { // Отрисовка всех блоков
     setTimeArray();
@@ -28,6 +30,12 @@ function defaultStart() { // Отрисовка всех блоков
     createLowerState();
 }
 
+today_btn.addEventListener('click', () => {
+    defaultStart();
+    page = 0;
+    changePage();
+})
+
 highterMenu_state.addEventListener('click', (e) => {
     const target = e.target;
     if (target.className.split('').indexOf('-') === -1) return;
@@ -36,7 +44,7 @@ highterMenu_state.addEventListener('click', (e) => {
 
 lowerMenu_state.addEventListener('click', (e) => {
     const target = e.target;
-    if (target.className.split('').indexOf('-') === -1) return;
+    if (target.className.indexOf('low_menu-state-item') === -1) return;
     drawModalWindow(target);
 });
 
@@ -67,24 +75,24 @@ function setModalWindow(name, number, date, time, target) {
     modal_input.type = 'text';
     modal_input.maxLength = 15;
     modal_input.placeholder = 'Добавьте название';
-    modal_input.innerHTML = target.innerHTML;
+    modal_input.value = target.innerHTML;
     const modal_inputPhone = document.createElement('input');
     modal_inputPhone.type = 'text';
     modal_inputPhone.placeholder = '+7';
     const modal_textArea = document.createElement('textarea');
     modal_textArea.placeholder = 'Добавьте описание';
-    modal_textArea.innerHTML = target.getAttribute('textArea');
 
+    searchSavedText(target, modal_textArea, modal_inputPhone);
 
     modal_textArea.addEventListener('change', (e) => {
         modal_textArea.setAttribute('inputdata', e.target.value);
+        saveExeText(target, modal_inputPhone.value, e.target.value);
     })
 
     modal_inputPhone.addEventListener('change', (e) => {
         modal_inputPhone.setAttribute('inputdata', e.target.value);
+        saveExeText(target, e.target.value, modal_textArea.value);
     })
-
-    modal_inputPhone.innerHTML = target.getAttribute('phone');
 
     const month = monthes[date.getMonth()];
     const year = date.getFullYear();
@@ -153,6 +161,43 @@ function setModalWindow(name, number, date, time, target) {
     modal_win.append(modal_main_div);
 }
 
+function searchSavedText(target, area_inp, phone_inp) {
+    const name = target.getAttribute('dataclass');
+
+    if (exe_text_obj[page]) {
+        exe_text_obj[page].forEach(el => {
+            if (el.className === name ) {
+                area_inp.value = el.area;
+                phone_inp.value = el.phone;
+            }
+        })
+    }
+}
+
+function saveExeText(target, phoneText, areaText) {
+    let isNameInObj = false;
+    let id = null;
+    const name = target.getAttribute('dataclass');
+
+    if (exe_text_obj[page]) {
+        exe_text_obj[page].forEach((el, i) => {
+            if (el.className === name ) {
+                isNameInObj = true;
+                id = i;
+            }
+        })
+        if (isNameInObj) {
+            exe_text_obj[page][id].phone = phoneText
+            exe_text_obj[page][id].area = areaText;
+        } else {
+            exe_text_obj[page] = [ ...exe_text_obj[page], { phone: phoneText, area: areaText, className: name }];
+        }
+
+    } else {
+        exe_text_obj[page] = [];
+    }
+}
+
 function setModalColor(target, colorName) {
     deleteColor(target);
     target.classList.add(colorName);
@@ -186,6 +231,12 @@ function deleteObject(target) { // Удаляет объект менюшки
     page_obj[page].forEach((el, i) => {
         if (className === el.className) {
             page_obj[page].splice(i, 1);
+        }
+    });
+
+    exe_text_obj[page].forEach((el, i) => {
+        if (className === el.className) {
+            exe_text_obj[page].splice(i, 1);
         }
     });
 }
