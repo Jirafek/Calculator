@@ -4,6 +4,8 @@ require_once 'require.php';
 if (!$_SESSION['user']) {
     header('Location: authorization');
 }
+
+var_dump($_GET);
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +36,7 @@ if (!$_SESSION['user']) {
                     </svg>
                 </button>
             </div>
+            <a href="profile">Профиль</a>
         </header>
 
         <div class="arrows">

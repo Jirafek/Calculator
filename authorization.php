@@ -44,8 +44,11 @@ if ($_SESSION['user']) {
                             authorizationForm();
                         ?>
                         <!-- https://login.yandex.ru/info?format=json&jwt_secret=49c4ca67494641bab188436d3efe578e&oauth_token=AQAAAAARyWP8AAftwcgAxbV6LU8vl8QFG9Dd1Tk -->
-                        <a class="authorization-yandex" href="https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store/authorization">
-                            Войти
+                        <a class="authorization__href" href="https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store/authorization">
+                            Войти через Яндекс
+                        </a>
+                        <a class="authorization__href" href="https://oauth.vk.com/authorize?client_id=8176755&display=page&redirect_uri=https://bsspo.store/authorization&scope=friends&response_type=token&v=5.131&state=123456">
+                            Войти через Вконтакте
                         </a>
                     </form>
                 </div>

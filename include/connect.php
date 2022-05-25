@@ -29,4 +29,6 @@ if (!$mysqli) {
 
 // https://bsspo.store/authorization&expires_in=86400&state=123456
 
+// user_ids=226935348&fields=bdate&expires_in=86400&state=123456&access_token=a28462c0bcd82de5818cfd34473ee07d185ca9b09e5aa825acd14f128f0e0ce3f5e83b5c73f1731296cd7&v=5.131
+// access_token=f697a1abd0333ac3d23a81c383a6605a926dc5d6d7e98148a54ae605a0bb96c6110287c03a6b9b3564bef&expires_in=86400&user_id=226935348&state=123456
 ?>
