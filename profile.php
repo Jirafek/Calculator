@@ -4,6 +4,11 @@ require_once 'require.php';
 if (!$_SESSION['user']) {
     header('Location: authorization');
 }
+
+if (isset($_REQUEST['user_exit'])) {
+    sessionDeleteUser();
+    header('Location: authorization');
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,26 +41,26 @@ if (!$_SESSION['user']) {
         <main class="main">
             <div class="container">
                 <div class="main__container">
-                    <div class="profile authorization">
-                    <label for="profileLogin">Логин</label>
-                    <input class="authorization__input" type="text" id="profileLogin" name="login" value="<?= $_SESSION['user']['login'] ?>">
-                    <label for="profileEmail">Email</label>
-                    <input class="authorization__input" type="email" id="profileEmail" name="email" value="<?= $_SESSION['user']['email'] ?>">
-                    <label for="profileGroup">Группа</label>
-                    <input class="authorization__input" type="email" id="profileGroup" name="group">
-                    <label for="profilePassword">Поменять пароль</label>
-                    <input class="authorization__input" type="password" id="profilePassword" name="password">
-                    <label for="profilePasswordConfirm">Введите пароль, чтобы подтвердить изменения</label>
-                    <input class="authorization__input" type="password" id="profilePasswordConfirm" name="password_confirm">
-                    <div class="profile__buttons">
-                        <button class="authorization__button" name="save_profile">
-                            Сохранить
-                        </button>
-                        <button class="authorization__button" name="save_profile">
-                            Выйти из аккаунта
-                        </button>
-                    </div>
-                    </div>
+                    <form class="profile authorization">
+                        <label for="profileLogin">Логин</label>
+                        <input class="authorization__input" type="text" id="profileLogin" name="login" value="<?= $_SESSION['user']['login'] ?>">
+                        <label for="profileEmail">Email</label>
+                        <input class="authorization__input" type="email" id="profileEmail" name="email" value="<?= $_SESSION['user']['email'] ?>">
+                        <label for="profileGroup">Группа</label>
+                        <input class="authorization__input" type="email" id="profileGroup" name="group">
+                        <label for="profilePassword">Поменять пароль</label>
+                        <input class="authorization__input" type="password" id="profilePassword" name="password">
+                        <label for="profilePasswordConfirm">Введите пароль, чтобы подтвердить изменения</label>
+                        <input class="authorization__input" type="password" id="profilePasswordConfirm" name="password_confirm">
+                        <div class="profile__buttons">
+                            <button class="authorization__button" name="save_profile">
+                                Сохранить
+                            </button>
+                            <button class="authorization__button" name="user_exit">
+                                Выйти из аккаунта
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>

@@ -20,4 +20,13 @@ if (!$mysqli) {
     die('Отсутсвует подключение к бд');
 }
 
+// https://oauth.vk.com/authorize?client_id=8176755&display=page&redirect_uri=https://bsspo.store/authorization&scope=friends&response_type=token&v=5.131&state=123456
+
+// https://REDIRECT_URI#access_token=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400&user_id=8492&state=123456
+// https://api.vk.com/method/users.get?access_token=93cb90ec280f97beb4
+
+// https://api.vk.com/method/users.get?user_ids=226935348&fields=bdate&expires_in=86400&state=123456&access_token=a28462c0bcd82de5818cfd34473ee07d185ca9b09e5aa825acd14f128f0e0ce3f5e83b5c73f1731296cd7&v=5.131
+
+// https://bsspo.store/authorization&expires_in=86400&state=123456
+
 ?>

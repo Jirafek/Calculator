@@ -1,12 +1,10 @@
 <?
 
-require_once '../require.php';
-
 class Group {
-    public static function createGroup($user_id, $link, $code) {
+    public static function createGroup($group_name, $user_id, $link, $code) {
         global $mysqli;
 
-        return $mysqli->query("INSERT INTO `group` (`group_id`, `author_id`, `link`, `code`) VALUES (NULL, '$user_id', '$link', '$code')");
+        return $mysqli->query("INSERT INTO `group` (`group_id`, `name`,`author_id`, `link`, `code`) VALUES (NULL, '$group_name', '$user_id', '$link', '$code')");
     }
 
     public static function getGroupData($link, $code) {

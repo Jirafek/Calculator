@@ -31,7 +31,7 @@ function createUser($login, $email, $password, $password_confirm) {
     $password = password_hash($password, PASSWORD_DEFAULT);
     $session = md5(random_int(1000, 9999) + time());
 
-    $create_user = Authorization::createUser($login, $email, $password, $session);
+    $create_user = Authorization::createUser($login, $email, $password, $session, time());
 
     if (!$create_user) {
         echo '<p>Пользователь не создан</p>';
@@ -44,7 +44,7 @@ function createUser($login, $email, $password, $password_confirm) {
     checkCookieSession($login, $session);
 
     echo '<p>Регистрация прошла успешно!</p>';
-    header('Refresh: 3');
+    header('Location: /');
 }
 
 function logUser($login, $password) {
@@ -73,7 +73,7 @@ function logUser($login, $password) {
     setcookie('session', $_SESSION['user']['session'], time()+60*60*24*30);
 
     echo '<p>Успешная авторизация</p>';
-    header('Refresh: 2');
+    header('Location: /');
 }
 
 function checkCookieSession($login, $session) {

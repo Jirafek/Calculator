@@ -43,12 +43,10 @@ if ($_SESSION['user']) {
                         <?
                             authorizationForm();
                         ?>
-                        <button class="getData">
-                            <!-- https://login.yandex.ru/info?format=json&jwt_secret=49c4ca67494641bab188436d3efe578e&oauth_token=AQAAAAARyWP8AAftwcgAxbV6LU8vl8QFG9Dd1Tk -->
-                            <a class="authorization-yandex" href="https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store/authorization">
-                                Войти
-                            </a>
-                        </button>
+                        <!-- https://login.yandex.ru/info?format=json&jwt_secret=49c4ca67494641bab188436d3efe578e&oauth_token=AQAAAAARyWP8AAftwcgAxbV6LU8vl8QFG9Dd1Tk -->
+                        <a class="authorization-yandex" href="https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store/authorization">
+                            Войти
+                        </a>
                     </form>
                 </div>
             </div>
@@ -69,6 +67,9 @@ if ($_SESSION['user']) {
                 fetch(`${URL_BACKEND_TEST}/http/authorization.php`, {
                     method: 'POST',
                     body: JSON.stringify(res)
+                })
+                .then(res => {
+                    location.reload();
                 })
             });
         }
