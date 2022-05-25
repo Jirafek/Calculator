@@ -4,7 +4,8 @@
 
 body {
     background: linear-gradient(180deg, #82A0CD 0%, #000000 100%) no-repeat;
-    min-height: 98.1vh;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .wrapper {
@@ -13,7 +14,7 @@ body {
 }
 
 .arrows {
-    margin: 0 0 20px 38px;
+    margin: 0 0 20px 26px;
     display: flex;
     justify-content: center;
 }
@@ -363,6 +364,69 @@ i {
 
 .yellow_back {
     background-color: #CFC818;
+}
+
+.modal_calendar {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 230px;
+    height: 300px;
+    border-radius: 3px;
+    background-color: #8F8F8F;
+    z-index: 20;
+    transition: all 1s;
+}
+
+.top_margin {
+    top: 50% !important;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: -100000%;
+    transform: translate(-50%);
+    z-index: 15;
+    width: 100%;
+    min-height: 100vh;
+    background: transparent;
+}
+
+.modal_calendar {
+}
+
+.miniC_name {
+    text-align: center;
+    margin: 40px 0 20px 0;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.miniC_data {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(20px * 8 + 6px);
+    row-gap: 2px;
+    column-gap: 2px;
+    margin: 10px auto;
+}
+
+.miniC-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid;
+    background-color: white;
+    cursor: pointer;
+}
+
+.current_date {
+    /* background-color: rgb(0, 195, 255) !important; */
 }
 
 @media (max-width: 1360px) {

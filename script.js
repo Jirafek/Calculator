@@ -6,6 +6,9 @@ const arrowLeft = document.querySelector('.arrow_left');
 const modal_win = document.querySelector('.modal_window');
 const time_block = document.querySelector('.time-block');
 const today_btn = document.querySelector('.menu_today');
+const search_day = document.querySelector('.menu_searching-btn');
+const overlay = document.querySelector('.overlay');
+const mini_calendar = document.querySelector('.modal_calendar');
 const main = document.querySelector('main');
 const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
 const color_classes = ['green_back', 'blue_back', 'orange_back', 'red_back', 'brown_back', 'pink_back', 'blur_back', 'yellow_back'];
@@ -30,6 +33,10 @@ function defaultStart() { // Отрисовка всех блоков
     createLowerState();
 }
 
+search_day.addEventListener('click', () => {
+    drawMiniCalendar();
+})
+
 today_btn.addEventListener('click', () => {
     defaultStart();
     page = 0;
@@ -48,7 +55,72 @@ lowerMenu_state.addEventListener('click', (e) => {
     drawModalWindow(target);
 });
 
+function drawMiniCalendar() {
+    overlay.classList.add('left_margin');
+    mini_calendar.classList.add('top_margin');
+
+    const item_number = document.querySelectorAll('.item_number')[0];
+    const date = new Date(
+        JSON.parse(item_number.getAttribute('date'))
+    );
+
+    setMiniCalendar(date);
+}
+
+function setMiniCalendar(date) {
+    const month = monthes[date.getMonth()];
+    const day = date.getDate();
+    const cur_date = +document.querySelector('.menu_number').innerHTML;
+
+    const name_div = document.createElement('div');
+    name_div.classList.add('miniC_name');
+    name_div.innerHTML = month;
+
+    const data_div = document.createElement('div');
+    data_div.classList.add('miniC_data');
+
+    mini_calendar.appendChild(name_div);
+
+    const month_arr = generateMonth(date, day, month);
+
+    month_arr.forEach(el => {
+        const div = document.createElement('div');
+        div.classList.add('miniC-item');
+
+        if (cur_date === el) div.classList.add('current_date');
+
+        div.innerHTML = el;
+        data_div.appendChild(div);
+    })
+
+    mini_calendar.appendChild(data_div);
+}
+
+function generateMonth(date, day) {
+    date.setDate(date.getDate() - (day - 1));
+    const curDay_num = date.getDay();
+    let month_array = [];
+
+    const monthDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    const perf = (6 - curDay_num);
+
+    for (let i=0; i<perf; i++) {
+        month_array.push('');
+    }
+
+    for (let i=0; i<monthDays; i++) {
+        const day = date.getDate();
+
+        month_array.push(day);
+
+        date.setDate(date.getDate() + 1);
+    }
+
+    return month_array;
+}
+
 function drawModalWindow(target) { // Запуск модалки после клика на меню
+    overlay.classList.add('left_margin');
     modal_win.classList.add('left_margin');
     target.classList.remove('grey');
     target.classList.add('hard_own');
@@ -208,10 +280,13 @@ function setModalButton(number, target, input_name, phone, text_area) { // За�
     if (number === 0) {
         if (target.innerHTML === '') deleteColor(target);
         modal_win.classList.remove('left_margin');
+        overlay.classList.remove('left_margin');
         target.classList.remove('hard_own');
         target.classList.add('grey');
+        deleteObject(target, 'null');
     } else if (number === 1) {
         modal_win.classList.remove('left_margin');
+        overlay.classList.remove('left_margin');
         target.classList.add('grey');
         target.classList.remove('hard_own');
         target.innerHTML = input_name.value;
@@ -219,24 +294,28 @@ function setModalButton(number, target, input_name, phone, text_area) { // За�
     } else {
         deleteColor(target);
         modal_win.classList.remove('left_margin');
+        overlay.classList.remove('left_margin');
         target.classList.add('grey');
         target.classList.remove('hard_own');
         target.innerHTML = '';
-        deleteObject(target);
+        deleteObject(target, '');
     }
 }
 
-function deleteObject(target) { // Удаляет объект менюшки
+function deleteObject(target, indx) { // Удаляет объект менюшки
     const className = target.getAttribute('dataclass');
-    page_obj[page].forEach((el, i) => {
-        if (className === el.className) {
-            page_obj[page].splice(i, 1);
-        }
-    });
 
     exe_text_obj[page].forEach((el, i) => {
         if (className === el.className) {
             exe_text_obj[page].splice(i, 1);
+        }
+    });
+
+    if (indx === 'null') return;
+
+    page_obj[page].forEach((el, i) => {
+        if (className === el.className) {
+            page_obj[page].splice(i, 1);
         }
     });
 }
@@ -315,7 +394,7 @@ function arrowR() { // Следующая неделя
 
 function setTimeArray() {
     const GORIZONTAL_BLOCKS = 48;
-    let hours = 8;
+    let hours = 0;
     let minutes = 0;
     for (let i=0; i<GORIZONTAL_BLOCKS; i++) {
         const time = `${hours === 0 ? '00' : hours}:${minutes === 0 ? '00' : minutes}`;
