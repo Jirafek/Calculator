@@ -68,32 +68,101 @@ function drawMiniCalendar() {
 }
 
 function setMiniCalendar(date) {
+    mini_calendar.innerHTML = '';
     const month = monthes[date.getMonth()];
+    const year = date.getFullYear();
     const day = date.getDate();
     const cur_date = +document.querySelector('.menu_number').innerHTML;
 
     const name_div = document.createElement('div');
     name_div.classList.add('miniC_name');
-    name_div.innerHTML = month;
+    name_div.innerHTML = `${month} - ${year}`;
 
     const data_div = document.createElement('div');
     data_div.classList.add('miniC_data');
 
-    mini_calendar.appendChild(name_div);
+    const mini_main = document.createElement('div');
+    mini_main.classList.add('miniC-main');
 
-    const month_arr = generateMonth(date, day, month);
+    const span = document.createElement('span');
+    span.classList.add('close');
 
-    month_arr.forEach(el => {
+    span.addEventListener('click', () => {
+        overlay.classList.remove('left_margin');
+        mini_calendar.classList.remove('top_margin');
+    });
+
+    mini_main.appendChild(name_div);
+    mini_main.appendChild(span);
+
+    const month_arr = generateMonth(date, day);
+
+    month_arr.forEach((el, i) => {
         const div = document.createElement('div');
         div.classList.add('miniC-item');
+
+        if (days.includes(el)) div.classList.add('miniC-day_name');
 
         if (cur_date === el) div.classList.add('current_date');
 
         div.innerHTML = el;
+
+        if (!days.includes(el)) {
+            const cur_month_week = Math.ceil((i + 1) / 7) - 1;
+            div.classList.add(`miniC-${cur_month_week}`);
+            div.setAttribute('dataclass', `miniC-${cur_month_week}`)
+        }
+
+        if (!days.includes(el) && el !== '') {
+            const cur_month = date.getMonth() - 1;
+            const cur_month_week = Math.ceil((i + 1) / 7) - 1;
+            const cur_year = date.getFullYear();
+
+            div.setAttribute('month', cur_month);
+            div.setAttribute('week', cur_month_week);
+            div.setAttribute('year', cur_year);
+        }
+
+        div.addEventListener('click', (e) => {
+            miniCalendarClick(e.target);
+        });
+
         data_div.appendChild(div);
     })
 
-    mini_calendar.appendChild(data_div);
+    mini_main.appendChild(data_div);
+
+    const arrows = document.createElement('div');
+    arrows.classList.add('miniC_arrows');
+    const left_arr = document.createElement('i');
+    left_arr.classList.add('miniC_leftArr');
+    const right_arr = document.createElement('i');
+    right_arr.classList.add('miniC_rightArr');
+
+    right_arr.addEventListener('click', () => {
+        date.setMonth(date.getMonth());
+        setMiniCalendar(date);
+    });
+
+    left_arr.addEventListener('click', () => {
+        date.setMonth(date.getMonth() - 2);
+        setMiniCalendar(date);
+    });
+
+    arrows.appendChild(left_arr);
+    arrows.appendChild(right_arr);
+
+    mini_main.appendChild(arrows);
+
+    mini_calendar.append(mini_main);
+}
+
+function miniCalendarClick(target) {
+    const week = target.getAttribute('week') || '';
+    const month = target.getAttribute('month') || '';
+    const cur_year = target.getAttribute('year') || '';
+
+    console.log(week, month, cur_year);
 }
 
 function generateMonth(date, day) {
@@ -102,9 +171,12 @@ function generateMonth(date, day) {
     let month_array = [];
 
     const monthDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    const perf = (6 - curDay_num);
 
-    for (let i=0; i<perf; i++) {
+    days.forEach(name => {
+        month_array.push(name);
+    });
+
+    for (let i=0; i<curDay_num; i++) {
         month_array.push('');
     }
 

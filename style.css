@@ -394,14 +394,49 @@ i {
     background: transparent;
 }
 
-.modal_calendar {
+.miniC-main {
+    height: 100%;
+    position: relative;
 }
 
 .miniC_name {
     text-align: center;
-    margin: 40px 0 20px 0;
+    margin: 0px 0 20px 0;
+    padding-top: 40px;
     font-size: 20px;
     font-family: sans-serif;
+}
+
+.close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
 }
 
 .miniC_data {
@@ -427,6 +462,31 @@ i {
 
 .current_date {
     /* background-color: rgb(0, 195, 255) !important; */
+}
+
+.miniC-day_name {
+    border-radius: 3px;
+    background-color: transparent;
+    cursor: default;
+    font-size: 14px;
+}
+
+.miniC_arrows {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 10px;
+}
+
+.miniC_leftArr {
+    margin-right: 10px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.miniC_rightArr {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }
 
 @media (max-width: 1360px) {
@@ -487,7 +547,7 @@ i {
     .menu_searching-btn {
         height: 29px;
         width: 29px;
-        background-size: 28px 26px;
+        background-size: 21px 20px;
     }
 
 }
