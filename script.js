@@ -105,12 +105,22 @@ function setMiniCalendar(date) {
 
         if (cur_date === el) div.classList.add('current_date');
 
+        el = String(el);
+
+        if (el.indexOf('prev') !== -1) {
+            el = el.split('-')[0];
+            div.classList.add('previous-month');
+        } else if (el.indexOf('next') !== -1) {
+            el = el.split('-')[0];
+            div.classList.add('next-month');
+        }
+
         div.innerHTML = el;
 
         if (!days.includes(el)) {
             const cur_month_week = Math.ceil((i + 1) / 7) - 1;
             div.classList.add(`miniC-${cur_month_week}`);
-            div.setAttribute('dataclass', `miniC-${cur_month_week}`)
+            div.setAttribute('dataclass', `miniC-${cur_month_week}`);
         }
 
         if (!days.includes(el) && el !== '') {
@@ -118,7 +128,13 @@ function setMiniCalendar(date) {
             const cur_month_week = Math.ceil((i + 1) / 7) - 1;
             const cur_year = date.getFullYear();
 
-            div.setAttribute('month', cur_month);
+            if (div.className.includes('previous-month')) {
+                div.setAttribute('month', cur_month - 1);
+            } else if (div.className.includes('next-month')) {
+                div.setAttribute('month', cur_month + 1);
+            } else {
+                div.setAttribute('month', cur_month);
+            }
             div.setAttribute('week', cur_month_week);
             div.setAttribute('year', cur_year);
         }
@@ -159,25 +175,52 @@ function setMiniCalendar(date) {
 
 function miniCalendarClick(target) {
     const week = target.getAttribute('week') || '';
-    const month = target.getAttribute('month') || '';
+    let month = target.getAttribute('month') || '';
     const cur_year = target.getAttribute('year') || '';
 
-    console.log(week, month, cur_year);
+    const cur_class = target.getAttribute('dataclass');
+
+    const all_numbers = document.querySelectorAll(`.${cur_class}`);
+    const item_number = document.querySelectorAll('.item_number');
+
+    item_number.forEach((el, i) => {
+        const number = all_numbers[i].innerHTML;
+        month = all_numbers[i].getAttribute('month');
+        const cur_date = new Date(+cur_year, +month, +number);
+
+        el.innerHTML = number;
+        el.setAttribute('date', JSON.stringify(cur_date));
+
+        if (i === 0) firstDate = cur_date;
+        if (i === 6) lastDate = cur_date;
+    });
 }
 
 function generateMonth(date, day) {
     date.setDate(date.getDate() - (day - 1));
     const curDay_num = date.getDay();
+    const firstDateDay = firstDate.getDate().toString();
     let month_array = [];
+    let prev_array = [];
 
     const monthDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+    const prev_month = new Date(date.getFullYear(), date.getMonth(), 0);
+    const next_month = new Date(date.getFullYear(), date.getMonth() + 2, 1);
 
     days.forEach(name => {
         month_array.push(name);
     });
 
     for (let i=0; i<curDay_num; i++) {
-        month_array.push('');
+        prev_array.push(`${prev_month.getDate()}-prev`);
+        prev_month.setDate(prev_month.getDate() - 1);
+    }
+
+    prev_array = prev_array.reverse();
+
+    for (let i=0; i<curDay_num; i++) {
+        month_array.push(prev_array[i]);
     }
 
     for (let i=0; i<monthDays; i++) {
@@ -186,6 +229,13 @@ function generateMonth(date, day) {
         month_array.push(day);
 
         date.setDate(date.getDate() + 1);
+    }
+
+    const dop_length = 7 - (month_array.length % 7)
+
+    for (let i=0; i<dop_length; i++) {
+        month_array.push(`${next_month.getDate()}-next`);
+        next_month.setDate(next_month.getDate() + 1);
     }
 
     return month_array;
@@ -377,11 +427,13 @@ function setModalButton(number, target, input_name, phone, text_area) { // За�
 function deleteObject(target, indx) { // Удаляет объект менюшки
     const className = target.getAttribute('dataclass');
 
-    exe_text_obj[page].forEach((el, i) => {
-        if (className === el.className) {
-            exe_text_obj[page].splice(i, 1);
-        }
-    });
+    if (exe_text_obj[page]) {
+        exe_text_obj[page].forEach((el, i) => {
+            if (className === el.className) {
+                exe_text_obj[page].splice(i, 1);
+            }
+        });
+    }
 
     if (indx === 'null') return;
 

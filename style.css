@@ -489,6 +489,10 @@ i {
     -webkit-transform: rotate(-45deg);
 }
 
+.previous-month, .next-month {
+    opacity: 0.5;
+}
+
 @media (max-width: 1360px) {
 
 
