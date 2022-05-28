@@ -8,7 +8,7 @@ function createEvent($data, $author_id, $group_id) {
     $phone = $data['phone'];
     $color = $data['color'];
     $day = $data['day'];
-    $mouth = $data['mouth'];
+    $month = $data['month'];
     $year = $data['year'];
     $time = $data['time'];
     $author_id = (int) $author_id;
@@ -19,31 +19,31 @@ function createEvent($data, $author_id, $group_id) {
     $phone = protectionData($phone);
     $color = protectionData($color);
     $day = protectionData($day);
-    $mouth = protectionData($mouth);
+    $month = protectionData($month);
     $year = protectionData($year);
     $time = protectionData($time);
 
     http_response_code(201);
 
-    echo json_encode([
-        'title' => "$title",
-        'description' => "$description",
-        'phone' => "$phone",
-        'color' => "$color",
-        'day' => "$day",
-        'mouth' => "$mouth",
-        'year' => " $year",
-        'time' => "$time",
-        'author_id' =>  "$author_id",
-        'group_id' => "$group_id"
-    ]);
+    // echo json_encode([
+    //     'title' => "$title",
+    //     'description' => "$description",
+    //     'phone' => "$phone",
+    //     'color' => "$color",
+    //     'day' => "$day",
+    //     'month' => "$month",
+    //     'year' => " $year",
+    //     'time' => "$time",
+    //     'author_id' =>  "$author_id",
+    //     'group_id' => "$group_id"
+    // ]);
 
     $message = [
         'message' => 'Event created',
         'status' => 'true'
     ];
 
-    $event = Event::createEvent($title, $description, $phone, $color, $day, $mouth, $year, $time, $author_id, $group_id);
+    $event = Event::createEvent($title, $description, $phone, $color, $day, $month, $year, $time, $author_id, $group_id);
 
     if (!$event) {
         $message = [

@@ -14,13 +14,13 @@ class Event {
         return $query_array;
     }
 
-    static public function createEvent($title, $description, $phone, $color, $day, $mouth, $year, $time, $author_id, $group_id) {
+    static public function createEvent($title, $description, $phone, $color, $day, $month, $year, $time, $author_id, $group_id) {
         global $mysqli;
         if ($group_id) {
-            $mysqli->query("INSERT INTO `event` (`event_id`, `title`, `description`, `phone`, `color`, `day`, `mouth`, `year`, `time`, `author_id`, `group_id`) VALUES (NULL, '$title', '$description', '$phone', '$color', '$day', '$mouth', '$year', '$time', '$author_id', '$group_id')");
+            $mysqli->query("INSERT INTO `event` (`event_id`, `title`, `description`, `phone`, `color`, `day`, `month`, `year`, `time`, `author_id`, `group_id`) VALUES (NULL, '$title', '$description', '$phone', '$color', '$day', '$month', '$year', '$time', '$author_id', '$group_id')");
         }
 
-        return $mysqli->query("INSERT INTO `event` (`event_id`, `title`, `description`, `phone`, `color`, `day`, `mouth`, `year`, `time`, `author_id`, `group_id`) VALUES (NULL, '$title', '$description', '$phone', '$color', '$day', '$mouth', '$year', '$time', '$author_id', NULL)");
+        return $mysqli->query("INSERT INTO `event` (`event_id`, `title`, `description`, `phone`, `color`, `day`, `month`, `year`, `time`, `author_id`, `group_id`) VALUES (NULL, '$title', '$description', '$phone', '$color', '$day', '$month', '$year', '$time', '$author_id', NULL)");
     }
 
     static public function deleteEvent($event_id, $author_id, $group_id) {

@@ -16,7 +16,7 @@ if ($_SESSION['user']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
-    <title>Календарь</title>
+    <title>Вход</title>
 </head>
 <body>
     <div class="wrapper">
@@ -62,8 +62,11 @@ if ($_SESSION['user']) {
         const authorizationYandex = document.querySelector('.authorization-yandex');
 
 	    const token = /access_token=([^&]+)/.exec(document.location.hash)[1];
+        const expires_in = /expires_in=([^&]+)/.exec(document.location.hash)[1];
+        const user_id = /user_id=([^&]+)/.exec(document.location.hash)[1];
+        const state = /state=([^&]+)/.exec(document.location.hash)[1];
 
-        if (token) {
+        if (token && !expires_in) {
             fetch(`https://login.yandex.ru/info?format=json&jwt_secret=49c4ca67494641bab188436d3efe578e&oauth_token=${token}`)
             .then(res => res.json())
             .then(res => {
@@ -74,7 +77,22 @@ if ($_SESSION['user']) {
                 .then(res => {
                     location.reload();
                 })
-            });
+            })
+            
+        }
+
+        if (expires_in) {
+            fetch(`https://api.vk.com/method/users.get?user_ids=${user_id}&fields=bdate&expires_in=${expires_in}&state=${state}&access_token=${token}&v=5.131`)
+                .then(res => res.json())
+                .then(res => {
+                    fetch(`${URL_BACKEND_TEST}/http/authorization.php`, {
+                        method: 'POST',
+                        body: JSON.stringify(res)
+                    })
+                    .then(res => {
+                        location.reload();
+                    })
+                })
         }
     </script>
 </body>

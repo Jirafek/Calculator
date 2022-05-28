@@ -1,10 +1,17 @@
 <?
 
-function createUser($login, $email, $password, $password_confirm) {
+function createUser($data) {
+    $data = file_get_contents('php://input');
+    $data = json_decode($data, true);
+
+    $login = protectionData($data['login']);
+    $email = protectionData($data['email']);
+    $password = protectionData($data['password']);
+
     $errors = [];
 
-    if (strlen($login) < 5) {
-        $errors[] = 'Логин меньше 5 символов';
+    if (strlen($login) < 4) {
+        $errors[] = 'Логин меньше 4 символов';
     }
 
     if (strlen($password) < 8) {
@@ -15,16 +22,17 @@ function createUser($login, $email, $password, $password_confirm) {
         $errors[] = 'Такой логин уже существует';
     }
 
-    if ($password != $password_confirm) {
-        $errors[] = 'Пароли не совпадают';
-    }
-
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Недопустимый email';
     }
 
     if (!empty($errors)) {
-        echo '<p>' . array_shift($errors) . '</p>';
+        $message = [
+            'message' => array_shift($errors),
+            'status' => 'false'
+        ];
+
+        echo json_encode($message);
         return;
     }
 
@@ -35,6 +43,12 @@ function createUser($login, $email, $password, $password_confirm) {
 
     if (!$create_user) {
         echo '<p>Пользователь не создан</p>';
+        $message = [
+            'message' => 'Пользователь не создан',
+            'status' => 'true'
+        ];
+    
+        echo json_encode($message);
         return;
     }
 
@@ -43,11 +57,21 @@ function createUser($login, $email, $password, $password_confirm) {
 
     checkCookieSession($login, $session);
 
-    echo '<p>Регистрация прошла успешно!</p>';
-    header('Location: /');
+    $message = [
+        'message' => 'Регистрация прошла успешно!',
+        'status' => 'true'
+    ];
+
+    echo json_encode($message);
 }
 
-function logUser($login, $password) {
+function logUser($data) {
+    $data = file_get_contents('php://input');
+    $data = json_decode($data, true);
+
+    $login = protectionData($data['login']);
+    $password = protectionData($data['password']);
+
     $errors = [];
 
     $user = Authorization::getUser($login);
@@ -63,7 +87,12 @@ function logUser($login, $password) {
     }
 
     if (!empty($errors)) {
-        echo '<p>' . array_shift($errors) . '</p>';
+        $message = [
+            'message' => array_shift($errors),
+            'status' => 'false'
+        ];
+
+        echo json_encode($message);
         return;
     }
 
@@ -72,8 +101,12 @@ function logUser($login, $password) {
     setcookie('login', $_SESSION['user']['login'], time()+60*60*24*30);
     setcookie('session', $_SESSION['user']['session'], time()+60*60*24*30);
 
-    echo '<p>Успешная авторизация</p>';
-    header('Location: /');
+    $message = [
+        'message' => 'Успешная авторизация!',
+        'status' => 'true'
+    ];
+
+    echo json_encode($message);
 }
 
 function checkCookieSession($login, $session) {

@@ -14,7 +14,7 @@ class Authorization {
         $query = $query->fetch_assoc();
         $query = $query["COUNT(*)"];
 
-	return $query;
+	    return $query;
     }
 
     static public function getUser($login) {

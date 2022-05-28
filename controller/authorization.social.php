@@ -1,16 +1,18 @@
 <?
 
-class AuthorizationHttp {
+class AuthorizationSocial {
     static public function createUser($data, $session) {
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
 
         $login = protectionData($data['login']);
         $email = protectionData($data['default_email']);
+
+        
         $psuid = md5(protectionData($data['id']));
 
         if (Authorization::checkLogin($login)) {
-            AuthorizationHttp::logUser($login, $psuid);
+            AuthorizationSocial::logUser($login, $psuid);
             return;
         }
     

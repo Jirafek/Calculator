@@ -216,6 +216,11 @@ i {
     justify-content: space-between;
 }
 
+.header_left {
+    display: flex;
+    align-items: center;
+}
+
 .grey {
     background-color: #C4C4C4;
 }
