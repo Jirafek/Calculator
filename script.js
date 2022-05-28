@@ -338,7 +338,7 @@ function setModalWindow(name, number, date, time, target) {
         btn.className = 'grey modal_btn';
 
         btn.addEventListener('click', () => {
-            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea);
+            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea, number, date);
         })
 
         btns_div.appendChild(btn);
@@ -398,7 +398,7 @@ function setModalColor(target, colorName) {
     target.setAttribute('colorData', colorName);
 }
 
-function setModalButton(number, target, input_name, phone, text_area) { // Запоминаем отмеченные кнопки
+function setModalButton(number, target, input_name, phone, text_area, date_number, date) { // Запоминаем отмеченные кнопки
     if (number === 0) {
         if (target.innerHTML === '') deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -413,6 +413,7 @@ function setModalButton(number, target, input_name, phone, text_area) { // За�
         target.classList.remove('hard_own');
         target.innerHTML = input_name.value;
         saveCheckedPins(target, phone, text_area);
+        sendSavedData(target, input_name.value, phone.value, text_area.value, date_number, date.getMonth(), date.getFullYear());
     } else {
         deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -422,6 +423,21 @@ function setModalButton(number, target, input_name, phone, text_area) { // За�
         target.innerHTML = '';
         deleteObject(target, '');
     }
+}
+
+function sendSavedData(target, name, phone, text_area, date_number, month, year) { // Отправлять дфнные в бд
+    const color = target.getAttribute('colordata') || '';
+    let toSend = {
+       title: name,
+       description: text_area,
+       phone: phone,
+       color: color,
+       day: date_number,
+       month: month,
+       year: year
+    }
+    toSend = JSON.stringify(toSend);
+    console.log(toSend);
 }
 
 function deleteObject(target, indx) { // Удаляет объект менюшки
