@@ -29,26 +29,26 @@ https://{url}/http/event?{limit || offset || (любой из параметро
 
 https://{url}/http/event/ - METHOD "POST"
 {
-    "title" = "",
-    "description" = "",
-    "phone" = "",
-    "color" = "", 
-    "day" = "", // число
-    "month" = "", // число
-    "year" = "", // число
-    "time" = "" // в формате 00:00
+    "title": "",
+    "description": "",
+    "phone": "",
+    "color": "",
+    "day": "", // число
+    "month": "", // число
+    "year": "", // число
+    "time": "" // в формате 00:00
 }
 
 https://{url}/http/event/{id} - METHOD "PUT" или "PATCH"
 {
-    "title" = "",
-    "description" = "",
-    "phone" = "",
-    "color" = "",
-    "day" = "", // число
-    "month" = "", // число
-    "year" = "", // число
-    "time" = "" // в формате 00:00
+    "title": "",
+    "description": "",
+    "phone": "",
+    "color": "",
+    "day": "", // число
+    "month": "", // число
+    "year": "", // число
+    "time": "" // в формате 00:00
 }
 
 https://{url}/http/event/{id} - METHOD "DELETE"
