@@ -22,6 +22,10 @@ function createUser($data) {
         $errors[] = 'Такой логин уже существует';
     }
 
+    if (!preg_match('/^[a-z0-9]+$/i', $login)) {
+        $errors[] = 'Недопустимый логин';
+    }
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Недопустимый email';
     }
