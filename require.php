@@ -22,6 +22,8 @@ require_once 'controller/group.php';
 
 require_once 'model/group.user.php';
 
+require_once 'http/functions.php';
+
 
 
 ?>

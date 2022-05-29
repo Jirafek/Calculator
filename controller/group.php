@@ -68,6 +68,10 @@ function joinLink($user_id, $link) {
         $errors[] = 'Вы уже состоите в группе';
     }
 
+    if ($group['user_limit'] >= $group['user_count']) {
+        $errors[] = 'Все места заняты';
+    }
+
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
