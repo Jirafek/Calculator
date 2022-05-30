@@ -9,15 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         createUser($_POST);    
     }
 
-    if ($type == "log") {
+    if ($type === "log") {
         logUser($_POST);
     }
 
-    if ($type == "social") {
+    if ($type === "social") {
         AuthorizationSocial::createUser($_POST, $session);
     }
 
-    if ($type == 'exit') {
+    if ($type === "session") {
+        checkCookieSession($_COOKIE['login'], $_COOKIE['session']);
+    }
+
+    if ($type === 'exit') {
         sessionDeleteUser();
     }
 }

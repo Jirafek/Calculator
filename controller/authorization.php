@@ -114,12 +114,32 @@ function logUser($data) {
 }
 
 function checkCookieSession($login, $session) {
+    $login = protectionData($login);
+    $session = protectionData($session);
 
     $session = Authorization::checkCookieSession($login, $session);
 
-    if ($session) {
-        $_SESSION['user'] = Authorization::getUser($login);
+    if (!$session) {
+        http_response_code(404);
+
+        $message = [
+            'message' => 'Сессии не существует',
+            'status' => 'false'
+        ];
+
+        echo json_encode($message);
+        return;
     }
+
+    $_SESSION['user'] = Authorization::getUser($login);
+
+    $message = [
+        'message' => 'Успешная авторизация',
+        'status' => 'true'
+    ];
+
+    echo json_encode($message);
+    return;
 }
 
 ?>

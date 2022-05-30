@@ -25,7 +25,7 @@ https://{url}/http/group - METHOD "POST"
     "group_name": "" // есть проверка на название группы, пользователь не сможет присоединиться, если уже состоит
 }
 
-https://{url}/http/event?{limit || offset || (любой из параметров, который есть у event)}={param} - METHOD "GET" // Данные будут получены только у авторизованных пользователей
+https://{url}/http/event?{limit || offset || (любой из параметров, который есть у event)}={param} - METHOD "GET" // Данные будут получены только у авторизованных пользователей, точно также работает note, только в нем отсутсвует "time"
 
 https://{url}/http/event/ - METHOD "POST"
 {
