@@ -82,7 +82,7 @@ function joinLink($user_id, $link) {
         return;
     }
 
-    GroupUser::addUser($group['group_id'], $user_id, 1);
+    GroupUser::add($group['group_id'], $user_id, 1);
 }
 
 ?>

@@ -17,13 +17,13 @@ require_once 'components/authorization.php';
 require_once 'model/event.php';
 require_once 'controller/event.php';
 
+require_once 'model/note.php';
+require_once 'controller/note.php';
+
 require_once 'model/group.php';
 require_once 'controller/group.php';
 
 require_once 'model/group.user.php';
-
-require_once 'http/functions.php';
-
-
+require_once 'controller/group.user.php';
 
 ?>

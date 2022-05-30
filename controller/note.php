@@ -1,5 +1,5 @@
 <?
-function createEvent($data, $author_id, $group_id) {
+function createNote($data, $author_id, $group_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
 
@@ -12,7 +12,6 @@ function createEvent($data, $author_id, $group_id) {
     $day = $data['day'];
     $month = $data['month'];
     $year = $data['year'];
-    $time = $data['time'];
     $author_id = (int) $author_id;
     $group_id = $group_id ? (int) $group_id : '';
 
@@ -23,7 +22,6 @@ function createEvent($data, $author_id, $group_id) {
     $day = (int) $day;
     $month = (int) $month;
     $year = (int) $year;
-    $time = protectionData($time);
 
     if (!$author_id) {
         http_response_code(401);
@@ -31,7 +29,7 @@ function createEvent($data, $author_id, $group_id) {
         $errors[] = 'Не пройдена авторизация';
     }
 
-    if ($get_access < 3) {
+    if ($get_access < 2) {
         http_response_code(403);
 
         $errors[] = 'Нет доступа';
@@ -47,15 +45,15 @@ function createEvent($data, $author_id, $group_id) {
     }
 
     $message = [
-        'message' => 'Событие создано',
+        'message' => 'Запись создана',
         'status' => 'true'
     ];
 
-    $event = Event::createEvent($title, $description, $phone, $color, $day, $month, $year, $time, $author_id, $group_id);
+    $event = Note::create($title, $description, $phone, $color, $day, $month, $year, $author_id, $group_id);
 
     if (!$event) {
         $message = [
-            'message' => 'Событие не добавлено',
+            'message' => 'Запись не добавлена',
             'status' => 'false',
         ];
         echo json_encode($message);
@@ -67,7 +65,7 @@ function createEvent($data, $author_id, $group_id) {
     echo json_encode($message);
 }
 
-function getEvents($user_id, $group_id, $where_param, $limit, $offset) {
+function getNotes($user_id, $group_id, $where_param, $limit, $offset) {
     $user_id = (int) $user_id;
     $group_id = $group_id ? (int) $group_id : '';
 
@@ -75,7 +73,7 @@ function getEvents($user_id, $group_id, $where_param, $limit, $offset) {
 
     $offset = $offset ? "AND `event_id` > '$offset'" : " ";
 
-    $events = Event::getEvents($user_id, $group_id, $where_param, $limit, $offset);
+    $events = Note::get($user_id, $group_id, $where_param, $limit, $offset);
 
     if ($events) {
         http_response_code(200);
@@ -94,7 +92,7 @@ function getEvents($user_id, $group_id, $where_param, $limit, $offset) {
     echo json_encode($message);
 }
 
-function updateEvent($data, $event_id, $author_id, $group_id) {
+function updateNote($data, $note_id, $author_id, $group_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
     
@@ -105,7 +103,6 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
     $day = $data['day'];
     $month = $data['month'];
     $year = $data['year'];
-    $time = $data['time'];
     $author_id = (int) $author_id;
     $group_id = $group_id ? (int) $group_id : '';
 
@@ -116,7 +113,6 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
     $day = (int) $day;
     $month = (int) $month;
     $year = (int) $year;
-    $time = protectionData($time);
 
     if (!$author_id) {
         http_response_code(401);
@@ -133,13 +129,13 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
         return;
     }
 
-    $event = Event::updateEvent($event_id, $title, $description, $phone, $color, $day, $month, $year, $time, $author_id, $group_id);
+    $note = Note::update($note_id, $title, $description, $phone, $color, $day, $month, $year, $author_id, $group_id);
 
-    if (!$event) {
+    if (!$note) {
         http_response_code(403);
 
         $message = [
-            'message' => 'Вы не можете изменить данное событие',
+            'message' => 'Вы не можете изменить данную запись',
             'status' => 'false',
         ];
         echo json_encode($message);
@@ -147,13 +143,13 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
     }
 
     $message = [
-        'message' => 'Событие изменено',
+        'message' => 'Запись изменена',
         'status' => 'true',
     ];
     echo json_encode($message);
 }
 
-function deleteEvent($event_id, $author_id, $group_id) {
+function deleteNote($note_id, $author_id, $group_id) {
     $errors = [];
 
     if (!$author_id) {
@@ -172,11 +168,11 @@ function deleteEvent($event_id, $author_id, $group_id) {
     }
 
 
-    $delete = Event::deleteEvent($event_id, $author_id, $group_id);
+    $delete = Note::delete($note_id, $author_id, $group_id);
 
     if (!$delete) {
         $message = [
-            'message' => 'Событие не было удалено',
+            'message' => 'Запись не была удалена',
             'status' => 'false'
         ];
         echo json_encode($message);
@@ -186,7 +182,7 @@ function deleteEvent($event_id, $author_id, $group_id) {
     http_response_code(204);
 
     $message = [
-        'message' => 'Событие удалено',
+        'message' => 'Запись удалена',
         'status' => 'true'
     ];
     echo json_encode($message);
