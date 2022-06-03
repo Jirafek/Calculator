@@ -8,20 +8,33 @@
     <title>Calendar</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="overlay"></div>
-
-        <header class="header">
-            <div class="squere grey"></div>
-            <p class="header-name">Календарь</p>
+    <header class="header">
+        <div class="header-wrapper">
+            <div class="first-menu">
+                <div class="month-name"></div>
+                <div class="month-block">
+                    <div class="month-number"></div>
+                    <hr class="header-line">
+                    <div class="month-year"></div>
+                </div>
+            </div>
             <div class="header-menu">
                 <button class="menu_today d-h grey">Сегодня</button>
                 <div class="menu_day d-h grey"></div>
                 <div class="menu_number d-h grey"></div>
                 <div class="menu_full d-h grey"></div>
-                <button class="menu_searching-btn grey"></button>
+                <button class="menu_searching-btn grey d-h"></button>
             </div>
-        </header>
+            <div class="header-profil">
+                <div class="header-profil_hex"></div>
+                <div class="inside_lines">
+                    <span class="inside_lines-item"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="overlay"></div>
 
         <div class="arrows">
             <i class="arrow_left"></i>
@@ -32,10 +45,14 @@
 
         <main class="main">
             <div class="high_menu">
-                <div class="day_name"></div>
-                <div class="high_menu-state"></div>
+                <div class="high_menu-logo">
+                    <img src="./img//Logo.png" alt="logo" height="167" width="167">
+                </div>
+                <div class="high_menu-right">
+                    <div class="day_name"></div>
+                    <div class="high_menu-state"></div>
+                </div>
             </div>
-            <hr class="main-hr">
             <div class="low_menu">
                 <div class="time-state"></div>
                 <div class="low_menu-state"></div>

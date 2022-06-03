@@ -657,6 +657,14 @@ function setHeader() { // Добавляет данные в хедер
     const header_day = document.querySelector('.menu_day');
     const header_full = document.querySelector('.menu_full');
 
+    const header_firstMonth = document.querySelector('.month-name');
+    const header_firstDay = document.querySelector('.month-number');
+    const header_firstYear = document.querySelector('.month-year');
+
+    header_firstMonth.innerHTML = cur_month;
+    header_firstDay.innerHTML = `${cur_date} ${cur_day}`;
+    header_firstYear.innerHTML = cur_year;
+
     header_number.innerHTML = cur_date;
     header_full.innerHTML = `${cur_month} ${cur_year}`;
     header_day.innerHTML = cur_day;
