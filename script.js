@@ -616,6 +616,12 @@ function createLowerState() { // Создание всех временных ш
         data_number++;
         if (data_number > 6) data_number = 0;
     }
+    // const body = document.querySelector('body');
+    // const inner = body.innerHTML;
+    // body.innerHTML = '';
+    // setTimeout(() => {
+    //     body.innerHTML = inner
+    // }, 1000)
 }
 
 function createHighterMenu() { // Создание высшего меню
