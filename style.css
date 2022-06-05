@@ -22,22 +22,21 @@ body {
 }
 
 .arrows {
-    margin: 0 0 20px 26px;
+    margin-right: 6px;
     display: flex;
     justify-content: center;
 }
 
 i {
     cursor: pointer;
-    border: solid black;
-    border-width: 0 5px 5px 0;
-    display: inline-block;
-    padding: 8px;
+    width: 24px;
+    height: 48px;
+    background-size: cover;
+    background-position: center;
 }
 
 .arrow_right {
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
+    background-image: url(./img/ArrowR.png);
 }
 
 .first-menu {
@@ -92,9 +91,7 @@ i {
 }
 
 .arrow_left {
-    margin-right: 10px;
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+    background-image: url(./img/ArrowL.png);
 }
 
 .header {
