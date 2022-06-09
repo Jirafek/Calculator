@@ -25,6 +25,83 @@ let page = 0;
 let page_obj = {};
 let exe_text_obj = {};
 
+const header_menu = document.querySelector('.header-profil');
+
+header_menu.addEventListener('click', () => {
+    getRegistered();
+});
+
+function getRegistered() {
+    const body = document.querySelector('body');
+    const currentPage = body.innerHTML;
+    body.innerHTML = '';
+    createLoginPage(currentPage, body);
+}
+
+function createLoginPage(headPage, body) {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('dop_wrapper');
+
+    const head = document.createElement('div');
+    head.classList.add('dop_head');
+    head.innerHTML = 'Вход';
+    wrapper.appendChild(head);
+    
+    const loginBody = document.createElement('div');
+    loginBody.classList.add('dop_body');
+
+    const innerBody = document.createElement('div');
+    innerBody.classList.add('dop_body-innerUp');
+    const login_input = document.createElement('input');
+    login_input.type = 'text';
+    login_input.placeholder = 'Логин';
+    const pass_input = document.createElement('input');
+    pass_input.type = 'password';
+    pass_input.placeholder = 'Пароль';
+    const login_btn = document.createElement('button');
+    login_btn.innerHTML = 'Вход';
+    const logup_btn = document.createElement('button');
+    logup_btn.innerHTML = 'Регистрация';
+
+    login_input.className = 'innerIn-login innerIn-input';
+    pass_input.className = 'innerIn-pass innerIn-input';
+    login_btn.classList.add('innerIn-btn');
+    logup_btn.classList.add('innerIn-btn');
+
+    const btns_div = document.createElement('div');
+    btns_div.classList.add('innerIn-btns');
+    btns_div.appendChild(login_btn);
+    btns_div.appendChild(logup_btn);
+
+    const login_innerBtns = document.createElement('div');
+    login_innerBtns.classList.add('inner_scinny');
+    const yandex_btn = document.createElement('button');
+    yandex_btn.className = 'yandex_btn inner_scinny-btn';
+
+    const yandex_img = document.createElement('img');
+    yandex_img.className = 'inner_scinny-img yandex_img';
+    const vk_img = document.createElement('img');
+    vk_img.className = 'inner_scinny-img vk_img';
+
+    yandex_btn.appendChild(yandex_img);
+    yandex_btn.innerHTML += 'Авторизация через Яндекс';
+    const vk_button = document.createElement('button');
+    vk_button.className = 'vk_btn inner_scinny-btn';
+    vk_button.appendChild(vk_img);
+    vk_button.innerHTML += 'Авторизация через ВКонтакте';
+    login_innerBtns.appendChild(yandex_btn);
+    login_innerBtns.appendChild(vk_button);
+
+    loginBody.appendChild(login_input);
+    loginBody.appendChild(pass_input);
+    loginBody.appendChild(btns_div);
+    loginBody.appendChild(login_innerBtns);
+
+    wrapper.appendChild(loginBody);
+
+    body.append(wrapper);
+}
+
 function defaultStart() { // Отрисовка всех блоков
     setTimeArray();
     setHeader();
