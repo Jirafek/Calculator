@@ -1359,6 +1359,7 @@ i {
     .modal_window {
         width: 375px;
         height: 812px;
+        margin-top: 60px;
     }
 
     .modal-wrapper {
