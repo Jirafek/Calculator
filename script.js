@@ -113,11 +113,11 @@ function createLoginPage(currentPage, body) {
     });
 
     logup_btn.addEventListener('click', () => {
-        logupClick(body)
+        logupClick(currentPage, body)
     })
 }
 
-function logupClick(body) {
+function logupClick(headPage, body) {
     const wrapper = document.querySelector('.dop_wrapper');
     wrapper.innerHTML = '';
 
@@ -182,14 +182,77 @@ function logupClick(body) {
     wrapper.appendChild(loginBody);
 
     body.append(wrapper);
+
+    logup_btn.addEventListener('click', () => {
+        saveRegisteredData(login_inp, email_inp, pass_inp, headPage);
+    })
+}
+
+function saveRegisteredData(login_inp, email_inp, pass_inp, headPage) {
+    const login = login_inp.value;
+    const email = email_inp.value;
+    const password = pass_inp.value;
+    const not_errors = validation(email);
+    if (!not_errors) return;
+    
+    console.log(login, password, email); // Тут будет fetch
+
+
+    const curPage = document.querySelector('.dop_wrapper');
+    curPage.innerHTML = '';
+    createLoginPage(headPage, document.querySelector('body'));
 }
 
 function loginClick(headPage) {
     const login = document.querySelector('.innerIn-login').value;
     const password = document.querySelector('.innerIn-pass').value;
+    const not_errors = validation(null);
+    if (!not_errors) return;
+    
+    console.log(login, password); // Тут будет fetch
+
+    
     const curPage = document.querySelector('.dop_wrapper');
     curPage.innerHTML = '';
     headPage.classList.remove('hide');
+}
+
+function validation(email) {
+    let errors = 0;
+    let login_inp, password_inp, email_inp;
+
+    if (!email) {
+        login_inp = document.querySelector('.innerIn-login');
+        password_inp = document.querySelector('.innerIn-pass');
+        email_inp = null;
+    } else {
+        login_inp = document.querySelector('.innerUp-login');
+        password_inp = document.querySelector('.innerUp-password');
+        email_inp = document.querySelector('.innerUp-email');
+    }
+
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    if (login_inp.value.length < 4) {
+        login_inp.classList.add('flow_animation');
+        errors += 1;
+    }
+    if (password_inp.value.length < 8) {
+        password_inp.classList.add('flow_animation');
+        errors += 1;
+    }
+    if (email_inp && reg.test(email_inp.value) === false) {
+        email_inp.classList.add('flow_animation');
+        errors += 1;
+    }
+
+    setTimeout(() => {
+        login_inp.classList.remove('flow_animation');
+        password_inp.classList.remove('flow_animation');
+        email_inp ? email_inp.classList.remove('flow_animation') : '';
+    }, 2000)
+
+    return errors === 0
 }
 
 function defaultStart() { // Отрисовка всех блоков
