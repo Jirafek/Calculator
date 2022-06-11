@@ -8,58 +8,60 @@
     <title>Calendar</title>
 </head>
 <body>
-    <header class="header">
-        <div class="header-wrapper">
-            <div class="first-menu">
-                <div class="month-name"></div>
-                <div class="month-block">
-                    <div class="month-number"></div>
-                    <hr class="header-line">
-                    <div class="month-year"></div>
+    <div class="head-page">
+        <header class="header">
+            <div class="header-wrapper">
+                <div class="first-menu">
+                    <div class="month-name"></div>
+                    <div class="month-block">
+                        <div class="month-number"></div>
+                        <hr class="header-line">
+                        <div class="month-year"></div>
+                    </div>
+                </div>
+                <div class="header-menu">
+                    <button class="menu_today d-h grey">Сегодня</button>
+                    <div class="menu_day d-h grey"></div>
+                    <div class="menu_number d-h grey"></div>
+                    <div class="menu_full d-h grey"></div>
+                    <button class="menu_searching-btn grey d-h"></button>
+                </div>
+                <div class="header-profil">
+                    <div class="header-profil_hex"></div>
+                    <div class="inside_lines">
+                        <span class="inside_lines-item"></span>
+                    </div>
                 </div>
             </div>
-            <div class="header-menu">
-                <button class="menu_today d-h grey">Сегодня</button>
-                <div class="menu_day d-h grey"></div>
-                <div class="menu_number d-h grey"></div>
-                <div class="menu_full d-h grey"></div>
-                <button class="menu_searching-btn grey d-h"></button>
+        </header>
+        <div class="wrapper">
+            <div class="overlay"></div>
+    
+            <div class="arrows">
+                <i class="arrow_left"></i>
+                <i class="arrow_right"></i>
             </div>
-            <div class="header-profil">
-                <div class="header-profil_hex"></div>
-                <div class="inside_lines">
-                    <span class="inside_lines-item"></span>
+            <div class="modal_window"></div>
+            <div class="modal_calendar"></div>
+    
+            <main class="main">
+                <div class="high_menu">
+                    <div class="high_menu-logo">
+                        <img class="high_menu-logo-img" src="./img//Logo.png" alt="logo" height="167" width="167">
+                    </div>
+                    <div class="high_menu-right">
+                        <div class="day_name"></div>
+                        <div class="high_menu-state"></div>
+                    </div>
                 </div>
-            </div>
+                <div class="low_menu">
+                    <div class="time-state"></div>
+                    <div class="low_menu-state"></div>
+                    <div class="time-block"></div>
+                </div>
+            </main>
+    
         </div>
-    </header>
-    <div class="wrapper">
-        <div class="overlay"></div>
-
-        <div class="arrows">
-            <i class="arrow_left"></i>
-            <i class="arrow_right"></i>
-        </div>
-        <div class="modal_window"></div>
-        <div class="modal_calendar"></div>
-
-        <main class="main">
-            <div class="high_menu">
-                <div class="high_menu-logo">
-                    <img class="high_menu-logo-img" src="./img//Logo.png" alt="logo" height="167" width="167">
-                </div>
-                <div class="high_menu-right">
-                    <div class="day_name"></div>
-                    <div class="high_menu-state"></div>
-                </div>
-            </div>
-            <div class="low_menu">
-                <div class="time-state"></div>
-                <div class="low_menu-state"></div>
-                <div class="time-block"></div>
-            </div>
-        </main>
-
     </div>
     <script src="./script.js"></script>
 </body>

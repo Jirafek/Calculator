@@ -8,6 +8,10 @@
 	src: url(./fonts/PT-Root-UI_Light.woff); 
 }
 
+.hide {
+    display: none;
+}
+
 body {
     background-color: #4A9691;
     min-height: 100vh;
@@ -116,7 +120,7 @@ body {
 
 .inner_scinny-btn {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: 16px 32px;
     width: 328px;
@@ -792,6 +796,76 @@ i {
     opacity: 0.5;
 }
 
+.innerUp-photo {
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    width: 111px;
+    height: 111px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.innerUp-photo_item {
+    width: 24px;
+    height: 24px;
+    background-image: url(./img/camera.png);
+}
+
+.innerUp-head {
+    width: calc(548px + 111px + 15px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px 0 18px 0;
+}
+
+.innerUp-inp {
+    background-color: #FFFFFF;
+    text-align: center;
+    border-radius: 40px;
+    border: 1px solid #2D3436;
+    color: black;
+    font-family: 'PT-Root';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.innerUp-nick {
+    width: 548px;
+    height: 71px;
+}
+
+.innerUp-main {
+    display: flex;
+    align-items: center;
+    row-gap: 15px;
+    flex-direction: column;
+    margin-top: 75px;
+}
+
+.innerUp-main_inp {
+    width: 420px;
+    height: 62px;
+}
+
+.innerUp-btn {
+    width: 420px;
+    height: 62px;
+    background: #FFFFFF;
+    border: 1px solid #2D3436;
+    border-radius: 40px;
+    font-family: 'PT-Root';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
 @media (max-width: 1730px) {
 
     .high_menu-state-item, .low_menu-state-item, .time-item {
@@ -953,12 +1027,36 @@ i {
 
 @media (max-width: 870px) {
 
+
+    .innerUp-main {
+        row-gap: 15px;
+        margin-top: 53px;
+    }
+    
+    .innerUp-main_inp {
+        width: 294px;
+        height: 44px;
+    }
+    
+    .innerUp-btn {
+        width: 294px;
+        height: 44px;
+        font-size: 17px;
+        line-height: 21px;
+    }
+
+    .innerUp-inp {
+        font-size: 17px;
+        line-height: 21px;
+    }
+
     .dop_wrapper {
         width: 527px;
     }
     
     .dop_head {
         height: 143px;
+        font-size: 65px;
     }
 
     .dop_body {
@@ -1146,7 +1244,11 @@ i {
 @media (max-width: 530px) {
 
     .dop_wrapper {
-        width: 369px;
+        width: 350px;
+    }
+
+    .dop_head-logup {
+        font-size: 45px;
     }
 
     .inner_scinny-btn {
