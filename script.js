@@ -33,13 +33,20 @@ header_menu.addEventListener('click', () => {
 
 function getRegistered() {
     const body = document.querySelector('body');
-    const currentPage = body.innerHTML;
-    body.innerHTML = '';
+    const currentPage = document.querySelector('.head-page');
+    currentPage.classList.add('hide');
     createLoginPage(currentPage, body);
 }
 
-function createLoginPage(headPage, body) {
-    const wrapper = document.createElement('div');
+function createLoginPage(currentPage, body) {
+    let wrapper;
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+
+    if (inner_wrapper)
+        wrapper = inner_wrapper;
+    else 
+        wrapper = document.createElement('div');
+    
     wrapper.classList.add('dop_wrapper');
 
     const head = document.createElement('div');
@@ -100,6 +107,89 @@ function createLoginPage(headPage, body) {
     wrapper.appendChild(loginBody);
 
     body.append(wrapper);
+
+    login_btn.addEventListener('click', () => {
+        loginClick(currentPage)
+    });
+
+    logup_btn.addEventListener('click', () => {
+        logupClick(body)
+    })
+}
+
+function logupClick(body) {
+    const wrapper = document.querySelector('.dop_wrapper');
+    wrapper.innerHTML = '';
+
+    const head = document.createElement('div');
+    head.className = 'dop_head dop_head-logup';
+    head.innerHTML = 'Регистрация';
+    wrapper.appendChild(head);
+
+    const loginBody = document.createElement('div');
+    loginBody.classList.add('dop_body');
+
+    const main_block = document.createElement('div');
+    main_block.classList.add('innerUp-main');
+
+    const login_inp = document.createElement('input');
+    login_inp.className = 'innerUp-login innerUp-inp innerUp-main_inp';
+    login_inp.type = 'text';
+    login_inp.placeholder = 'Логин';
+
+    const email_inp = document.createElement('input');
+    email_inp.className = 'innerUp-email innerUp-inp innerUp-main_inp';
+    email_inp.type = 'email';
+    email_inp.placeholder = 'E-mail';
+
+    const pass_inp = document.createElement('input');
+    pass_inp.className = 'innerUp-password innerUp-inp innerUp-main_inp';
+    pass_inp.type = 'password';
+    pass_inp.placeholder = 'Пароль';
+
+    const logup_btn = document.createElement('button');
+    logup_btn.classList.add('innerUp-btn');
+    logup_btn.innerHTML = 'Регистрация';
+
+    main_block.appendChild(login_inp);
+    main_block.appendChild(email_inp);
+    main_block.appendChild(pass_inp);
+    main_block.appendChild(logup_btn);
+
+
+    const login_innerBtns = document.createElement('div');
+    login_innerBtns.classList.add('inner_scinny');
+    const yandex_btn = document.createElement('button');
+    yandex_btn.className = 'yandex_btn inner_scinny-btn';
+
+    const yandex_img = document.createElement('img');
+    yandex_img.className = 'inner_scinny-img yandex_img';
+    const vk_img = document.createElement('img');
+    vk_img.className = 'inner_scinny-img vk_img';
+
+    yandex_btn.appendChild(yandex_img);
+    yandex_btn.innerHTML += 'Регистрация через Яндекс';
+    const vk_button = document.createElement('button');
+    vk_button.className = 'vk_btn inner_scinny-btn';
+    vk_button.appendChild(vk_img);
+    vk_button.innerHTML += 'Регистрация через ВКонтакте';
+    login_innerBtns.appendChild(yandex_btn);
+    login_innerBtns.appendChild(vk_button);
+
+    loginBody.appendChild(main_block);
+    loginBody.appendChild(login_innerBtns);
+
+    wrapper.appendChild(loginBody);
+
+    body.append(wrapper);
+}
+
+function loginClick(headPage) {
+    const login = document.querySelector('.innerIn-login').value;
+    const password = document.querySelector('.innerIn-pass').value;
+    const curPage = document.querySelector('.dop_wrapper');
+    curPage.innerHTML = '';
+    headPage.classList.remove('hide');
 }
 
 function defaultStart() { // Отрисовка всех блоков
