@@ -498,11 +498,11 @@ function setModalWindow(name, number, date, time, target) {
     const modal_input = document.createElement('input');
     modal_input.type = 'text';
     modal_input.maxLength = 15;
-    modal_input.placeholder = 'Добавьте название';
+    modal_input.placeholder = 'Добавить название';
     modal_input.value = target.innerHTML;
     const modal_inputPhone = document.createElement('input');
     modal_inputPhone.type = 'text';
-    modal_inputPhone.placeholder = '+7';
+    modal_inputPhone.placeholder = '+7 (_ _ _) _ _ _ - _ _ - _ _';
     const modal_textArea = document.createElement('textarea');
     modal_textArea.placeholder = 'Добавьте описание';
 
@@ -526,8 +526,8 @@ function setModalWindow(name, number, date, time, target) {
     modal_number.className = 'modal-number grey';
     modal_time.className = 'modal-time grey';
     modal_month.className = 'modal-month grey';
-    modal_input.classList.add('modal-head_input');
-    modal_inputPhone.className = 'modal-phone_inp grey';
+    modal_input.className = 'modal-head_input modal_inp';
+    modal_inputPhone.className = 'modal-phone_inp grey modal_inp';
     modal_textArea.className = 'modal-textArea grey';
 
     modal_name.innerHTML = name;
@@ -548,9 +548,10 @@ function setModalWindow(name, number, date, time, target) {
     head_div.appendChild(modal_name);
     head_div.appendChild(modal_number);
     head_div.appendChild(modal_month);
+    head_div.appendChild(modal_time);
 
     name_div.appendChild(modal_input);
-    name_div.appendChild(modal_time);
+    name_div.appendChild(modal_inputPhone);
 
     color_classes.forEach(name => {
         const div = document.createElement('div');
@@ -576,7 +577,6 @@ function setModalWindow(name, number, date, time, target) {
 
     modal_main_div.appendChild(head_div);
     modal_main_div.appendChild(name_div);
-    modal_main_div.appendChild(modal_inputPhone);
     modal_main_div.appendChild(color_div);
     modal_main_div.appendChild(modal_textArea);
     modal_main_div.appendChild(btns_div);
