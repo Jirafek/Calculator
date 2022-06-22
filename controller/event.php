@@ -3,7 +3,11 @@ function createEvent($data, $author_id, $group_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
 
-    $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'];
+    if (Globals::getData('user', 'user_id', $author_id)['group_id']) {
+        $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'];
+    } else {
+        $get_access = 4;
+    }
     
     $title = $data['title'];
     $description = $data['description'];
@@ -40,7 +44,7 @@ function createEvent($data, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -48,7 +52,7 @@ function createEvent($data, $author_id, $group_id) {
 
     $message = [
         'message' => 'Событие создано',
-        'status' => 'true'
+        'status' => true
     ];
 
     $event = Event::createEvent($title, $description, $phone, $color, $day, $month, $year, $time, $author_id, $group_id);
@@ -56,7 +60,7 @@ function createEvent($data, $author_id, $group_id) {
     if (!$event) {
         $message = [
             'message' => 'Событие не добавлено',
-            'status' => 'false',
+            'status' => false,
         ];
         echo json_encode($message);
         return;
@@ -88,7 +92,7 @@ function getEvents($user_id, $group_id, $where_param, $limit, $offset) {
 
     $message = [
         'message' => 'События не найдены',
-        'status' => 'false'
+        'status' => false
     ];
 
     echo json_encode($message);
@@ -127,7 +131,7 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -140,7 +144,7 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
 
         $message = [
             'message' => 'Вы не можете изменить данное событие',
-            'status' => 'false',
+            'status' => false,
         ];
         echo json_encode($message);
         return;
@@ -148,7 +152,7 @@ function updateEvent($data, $event_id, $author_id, $group_id) {
 
     $message = [
         'message' => 'Событие изменено',
-        'status' => 'true',
+        'status' => true,
     ];
     echo json_encode($message);
 }
@@ -165,7 +169,7 @@ function deleteEvent($event_id, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -177,7 +181,7 @@ function deleteEvent($event_id, $author_id, $group_id) {
     if (!$delete) {
         $message = [
             'message' => 'Событие не было удалено',
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -187,7 +191,7 @@ function deleteEvent($event_id, $author_id, $group_id) {
 
     $message = [
         'message' => 'Событие удалено',
-        'status' => 'true'
+        'status' => true
     ];
     echo json_encode($message);
     return;

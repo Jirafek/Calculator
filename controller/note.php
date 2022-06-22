@@ -38,7 +38,7 @@ function createNote($data, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -46,7 +46,7 @@ function createNote($data, $author_id, $group_id) {
 
     $message = [
         'message' => 'Запись создана',
-        'status' => 'true'
+        'status' => true
     ];
 
     $event = Note::create($title, $description, $phone, $color, $day, $month, $year, $author_id, $group_id);
@@ -54,7 +54,7 @@ function createNote($data, $author_id, $group_id) {
     if (!$event) {
         $message = [
             'message' => 'Запись не добавлена',
-            'status' => 'false',
+            'status' => false,
         ];
         echo json_encode($message);
         return;
@@ -86,7 +86,7 @@ function getNotes($user_id, $group_id, $where_param, $limit, $offset) {
 
     $message = [
         'message' => 'События не найдены',
-        'status' => 'false'
+        'status' => false
     ];
 
     echo json_encode($message);
@@ -123,7 +123,7 @@ function updateNote($data, $note_id, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -136,7 +136,7 @@ function updateNote($data, $note_id, $author_id, $group_id) {
 
         $message = [
             'message' => 'Вы не можете изменить данную запись',
-            'status' => 'false',
+            'status' => false,
         ];
         echo json_encode($message);
         return;
@@ -144,7 +144,7 @@ function updateNote($data, $note_id, $author_id, $group_id) {
 
     $message = [
         'message' => 'Запись изменена',
-        'status' => 'true',
+        'status' => true,
     ];
     echo json_encode($message);
 }
@@ -161,7 +161,7 @@ function deleteNote($note_id, $author_id, $group_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -173,7 +173,7 @@ function deleteNote($note_id, $author_id, $group_id) {
     if (!$delete) {
         $message = [
             'message' => 'Запись не была удалена',
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -183,7 +183,7 @@ function deleteNote($note_id, $author_id, $group_id) {
 
     $message = [
         'message' => 'Запись удалена',
-        'status' => 'true'
+        'status' => true
     ];
     echo json_encode($message);
     return;

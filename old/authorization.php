@@ -1,7 +1,7 @@
 <?
 require_once 'require.php';
 
-checkCookieSession($_COOKIE['login'], $_COOKIE['session']);
+// checkCookieSession($_COOKIE['login'], $_COOKIE['session']);
 
 if ($_SESSION['user']) {
     header('Location: /');

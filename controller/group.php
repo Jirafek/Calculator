@@ -31,7 +31,7 @@ function createGroup($data, $user_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
 
         echo json_encode($message);
@@ -45,7 +45,7 @@ function createGroup($data, $user_id) {
 
         $message = [
             'message' => 'Группа создана',
-            'status' => 'true'
+            'status' => true
         ];
 
         echo json_encode($message);
@@ -75,7 +75,7 @@ function joinLink($user_id, $link) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
 
         echo json_encode($message);

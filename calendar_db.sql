@@ -28,9 +28,6 @@ CREATE TABLE `group` (
   `is_private` tinyint(1) NOT NULL DEFAULT '1'
 );
 
-INSERT INTO `group` (`group_id`, `group_name`, `author_id`, `img`, `user_limit`, `user_count`, `link`, `code`, `is_private`) VALUES
-(27, 'test2454443', 4, NULL, 3, 2, 'a2eca978c8c376d31e055ede18ef712e', '7ce6a8', 0);
-
 DELIMITER $$
 CREATE TRIGGER `Add Admin` AFTER INSERT ON `group` FOR EACH ROW INSERT INTO `group_user` VALUES(NULL, NEW.`group_id`, NEW.`author_id`, 4)
 $$

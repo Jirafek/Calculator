@@ -23,10 +23,21 @@ function getUserInfo($user_id) {
 
     $message = [
         'message' => 'Пользовател не найден',
-        'status' => 'false'
+        'status' => false
     ];
 
     echo json_encode($message);
+}
+
+function updateUserInfo($data, $image, $user_id) {
+    $data = file_get_contents('php://input');
+    $data = json_decode($data, true);
+
+    $first_name = protectionData($data['first_name']);
+    $last_name = protectionData($data['last_name']);
+    $birthday = protectionData($data['birthday']);
+
+    
 }
 
 ?>

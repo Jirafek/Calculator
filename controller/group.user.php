@@ -30,7 +30,7 @@ function addGroupUser($code, $user_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -59,7 +59,7 @@ function deletUserInGroup($session_user_id, $group_id, $user_id) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
         echo json_encode($message);
         return;
@@ -70,7 +70,7 @@ function deletUserInGroup($session_user_id, $group_id, $user_id) {
     if ($delete) {
         $message = [
             'message' => 'Пользователь удалён из группы',
-            'status' => 'true'
+            'status' => true
         ];
         echo json_encode($message);
         return;
@@ -78,7 +78,7 @@ function deletUserInGroup($session_user_id, $group_id, $user_id) {
 
     $message = [
         'message' => 'Пользователь не был удалён из группы',
-        'status' => 'false'
+        'status' => false
     ];
     echo json_encode($message);
 }

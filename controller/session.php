@@ -9,7 +9,7 @@ function sessionDeleteUser() {
 
     $message = [
         'message' => 'Вы вышли из аккаунта',
-        'status' => 'true'
+        'status' => true
     ];
     echo json_encode($message);
 }

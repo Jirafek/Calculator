@@ -5,8 +5,8 @@ class AuthorizationSocial {
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
 
-        $login = protectionData($data['login']);
-        $email = protectionData($data['default_email']);
+        $login = $data['login'] ? protectionData($data['login']) : protectionData($data['id']);
+        $email = $data['default_email'] ? protectionData($data['default_email']) : ' ';
 
         
         $psuid = md5(protectionData($data['id']));
@@ -24,7 +24,7 @@ class AuthorizationSocial {
         if (!$create_user) {
             $message = [
                 'message' => 'Пользователь не создан',
-                'status' => 'false'
+                'status' => false
             ];
     
             echo json_encode($message);
@@ -38,7 +38,7 @@ class AuthorizationSocial {
     
         $message = [
             'message' => 'Регистрация прошла успешно!',
-            'status' => 'true'
+            'status' => true
         ];
 
         echo json_encode($message);

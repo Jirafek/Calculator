@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($type === "session") {
-        checkCookieSession($_COOKIE['login'], $_COOKIE['session']);
+        checkCookieSession($_POST);
     }
 
     if ($type === 'exit') {

@@ -33,7 +33,7 @@ function createUser($data) {
     if (!empty($errors)) {
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
 
         echo json_encode($message);
@@ -46,24 +46,20 @@ function createUser($data) {
     $create_user = Authorization::createUser($login, $email, $password, $session, time());
 
     if (!$create_user) {
-        echo '<p>Пользователь не создан</p>';
         $message = [
             'message' => 'Пользователь не создан',
-            'status' => 'true'
+            'status' => false
         ];
     
         echo json_encode($message);
         return;
     }
 
-    setcookie('login', $login, time()+60*60*24*30);
-    setcookie('session', $session, time()+60*60*24*30);
-
-    checkCookieSession($login, $session);
-
     $message = [
         'message' => 'Регистрация прошла успешно!',
-        'status' => 'true'
+        'status' => true,
+        'login' => $login,
+        'session' => $session
     ];
 
     echo json_encode($message);
@@ -91,9 +87,11 @@ function logUser($data) {
     }
 
     if (!empty($errors)) {
+        http_response_code(404);
+
         $message = [
             'message' => array_shift($errors),
-            'status' => 'false'
+            'status' => false
         ];
 
         echo json_encode($message);
@@ -102,20 +100,67 @@ function logUser($data) {
 
     $_SESSION['user'] = $user;
 
-    setcookie('login', $_SESSION['user']['login'], time()+60*60*24*30);
-    setcookie('session', $_SESSION['user']['session'], time()+60*60*24*30);
-
     $message = [
         'message' => 'Успешная авторизация!',
-        'status' => 'true'
+        'status' => true,
+        'login' => $_SESSION['user']['login'],
+        'session' => $_SESSION['user']['session']
     ];
 
     echo json_encode($message);
 }
 
-function checkCookieSession($login, $session) {
-    $login = protectionData($login);
-    $session = protectionData($session);
+function updateUser($data, $user_id) {
+    $data = file_get_contents('php://input');
+    $data = json_decode($data, true);
+
+    $login = protectionData($data['login']);
+    $email = protectionData($data['email']);
+    $password = protectionData($data['password']);
+
+    if (!$user_id) {
+        http_response_code(404);
+
+        $message = [
+            'message' => 'Сессии не существует',
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    if (!empty($errors)) {
+        $message = [
+            'message' => array_shift($errors),
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    $query = updateUser($login, $email, $password, $user_id);
+
+    if (!$query) {
+        $message = [
+            'message' => 'Произошла ошибка',
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    $_SESSION['user'] = Globals::getData('user', 'user_id', $user_id);
+}
+
+function checkCookieSession($data) {
+    $data = file_get_contents('php://input');
+    $data = json_decode($data, true);
+
+    $login = protectionData($data['login']);
+    $session = protectionData($data['session']);
 
     $session = Authorization::checkCookieSession($login, $session);
 
@@ -124,7 +169,7 @@ function checkCookieSession($login, $session) {
 
         $message = [
             'message' => 'Сессии не существует',
-            'status' => 'false'
+            'status' => false,
         ];
 
         echo json_encode($message);
@@ -135,7 +180,7 @@ function checkCookieSession($login, $session) {
 
     $message = [
         'message' => 'Успешная авторизация',
-        'status' => 'true'
+        'status' => true
     ];
 
     echo json_encode($message);

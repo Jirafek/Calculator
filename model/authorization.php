@@ -35,6 +35,12 @@ class Authorization {
         return $query;
     }
 
+    static public function updateUser($login, $email, $password, $user_id) {
+        global $mysqli;
+
+        return $mysqli->query("UPDATE `user` SET `login` = '$login', `email` = '$email', `password` = '$password' WHERE `user_id` = '$user_id'");
+    }
+
     static public function checkCookieSession($login, $session) {
         global $mysqli;
 
