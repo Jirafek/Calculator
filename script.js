@@ -110,6 +110,14 @@ function createLoginPage(currentPage, body) {
     login_innerBtns.appendChild(yandex_btn);
     login_innerBtns.appendChild(vk_button);
 
+    yandex_btn.addEventListener("click", e => {
+        window.location.href = 'https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store#authorization';
+    })
+
+    vk_button.addEventListener("click", e => {
+        window.location.href = 'https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store#authorization';
+    })
+
     loginBody.appendChild(login_input);
     loginBody.appendChild(pass_input);
     loginBody.appendChild(btns_div);

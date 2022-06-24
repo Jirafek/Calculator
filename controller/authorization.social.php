@@ -5,9 +5,13 @@ class AuthorizationSocial {
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
 
-        $login = $data['login'] ? protectionData($data['login']) : protectionData($data['id']);
-        $email = $data['default_email'] ? protectionData($data['default_email']) : ' ';
+        if (isset($data['login'])) {
+            $login = protectionData($data['login']);
+        } else {
+            $login = $data['response'][0]['id'];
+        }
 
+        $email = $data['default_email'] ? protectionData($data['default_email']) : NULL;
         
         $psuid = md5(protectionData($data['id']));
 
@@ -31,8 +35,6 @@ class AuthorizationSocial {
             return;
         }
     
-        setcookie('login', $login, time()+60*60*24*30);
-        setcookie('session', $session, time()+60*60*24*30);
     
         checkCookieSession($login, $session);
     
@@ -48,9 +50,6 @@ class AuthorizationSocial {
         $auth = Authorization::logUserAuth2($login, $psuid);
         
         if ($auth) {
-            setcookie('login', $_SESSION['user']['login'], time()+60*60*24*30);
-            setcookie('session', $_SESSION['user']['session'], time()+60*60*24*30);
-
             $_SESSION['user'] = Authorization::getUser($login);
         }
     }
