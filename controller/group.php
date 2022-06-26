@@ -1,5 +1,11 @@
 <?
 
+function getGroup($group_id) {
+    $group = Globals::getData('group_user', 'group_id', $group_id);
+
+    echo json_encode($group);
+}
+
 function createGroup($data, $user_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);

@@ -22,7 +22,7 @@ function getUserInfo($user_id) {
     http_response_code(404);
 
     $message = [
-        'message' => 'Пользовател не найден',
+        'message' => 'Пользователь не найден',
         'status' => false
     ];
 

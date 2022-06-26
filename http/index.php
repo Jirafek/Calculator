@@ -24,6 +24,10 @@ if ($param[0] === 'note') {
     require_once 'note.php';
 }
 
+if ($param[0] === 'user') {
+    require_once 'user.php';
+}
+
 if ($param[0] === 'user_info') {
     require_once 'user.info.php';
 }
