@@ -1,8 +1,10 @@
 Документация REST API
 
-https://{url}/http/authorization?type={registration || log || social || exit} - METHOD "POST" registration = { "login": "", // латиница и числа, не меньше 4 символов "email" "", // валидация почты "password": "" // не меньше 8 символов }
+https://{url}/http/authorization?type={registration || log || social || session || exit} - METHOD "POST" registration = { "login": "", // латиница и числа, не меньше 4 символов "email" "", // валидация почты "password": "" // не меньше 8 символов }
 
 log = { "login": "", "password": "" }
+
+session // данные из localStorage (login, session)
 
 social // в доработке
 
