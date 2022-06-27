@@ -12,7 +12,7 @@ function createUserInfo($data, $user_id) {
 }
 
 function getUserInfo($user_id) {
-    $data = UserInfo::getData('user_id', $user_id);
+    $data = UserInfo::get($user_id);
 
     if ($data) {
         echo json_encode($data);
