@@ -1,5 +1,5 @@
 // const URL_BACKEND = '';
-const URL_BACKEND = 'http://calendar';
+const URL_BACKEND = 'https://bsspo.store/http';
 
 const highterMenu_name = document.querySelector('.day_name');
 const highterMenu_state = document.querySelector('.high_menu-state');
