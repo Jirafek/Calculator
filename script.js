@@ -1,4 +1,4 @@
-const URL_BACKEND = 'http://calendar/http';
+const URL_BACKEND = 'https://bsspo.store/http';
 
 const highterMenu_name = document.querySelector('.day_name');
 const highterMenu_state = document.querySelector('.high_menu-state');
@@ -31,7 +31,8 @@ const header_menu = document.querySelector('.header-profil');
 
 header_menu.addEventListener('click', () => {
     if (localStorage.getItem('auth')) {
-        window.location.hash = '#profile'
+        window.location.hash = '#profile';
+        profilePage();
         return;
     }
 
@@ -39,6 +40,112 @@ header_menu.addEventListener('click', () => {
     
     getRegistered();
 });
+
+function profilePage() {
+    const body = document.querySelector('body');
+    const currentPage = document.querySelector('.head-page');
+    currentPage.classList.add('hide');
+
+    let wrapper;
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+
+    if (inner_wrapper)
+        wrapper = inner_wrapper;
+    else 
+        wrapper = document.createElement('div');
+    
+    wrapper.classList.add('dop_wrapper');
+
+    const head = document.createElement('div');
+    head.classList.add('dop_head');
+    head.innerHTML = 'Профиль';
+    wrapper.appendChild(head);
+    
+    const loginBody = document.createElement('div');
+    loginBody.classList.add('dop_body-lg');
+
+    const head_div = document.createElement('div');
+    head_div.classList.add('profile-head')
+    const image_body = document.createElement('div');
+    image_body.classList.add('profile-photo');
+    const image = document.createElement('div');
+    image.classList.add('profile-photo_item');
+    const nickname = document.createElement('input');
+    nickname.classList.add('profile-nick');
+    nickname.type = 'text';
+    nickname.value = 'Никнейм';
+    nickname.placeholder = 'Никнейм';
+
+    image_body.appendChild(image);
+    head_div.appendChild(image_body);
+    head_div.appendChild(nickname);
+
+    const main_div = document.createElement('div');
+    main_div.classList.add('profile-main');
+    const login_inp = document.createElement('input');
+    login_inp.classList.add('profil-login');
+    login_inp.value = 'Логин';
+    login_inp.placeholder = 'Логин';
+    const mail_inp = document.createElement('input');
+    mail_inp.classList.add('profil-email');
+    mail_inp.value = 'E-mail';
+    mail_inp.placeholder = 'E-mail';
+    const phone_inp = document.createElement('input');
+    phone_inp.classList.add('profil-phone');
+    phone_inp.value = 'Телефон';
+    phone_inp.placeholder = '+7 (_ _ _) _ _ _ - _ _ - _ _';
+    const pass_inp = document.createElement('input');
+    pass_inp.classList.add('profil-pass');
+    pass_inp.type = 'password'
+    pass_inp.value = 'Пароль';
+    pass_inp.placeholder = 'Пароль';
+
+    main_div.appendChild(login_inp);
+    main_div.appendChild(mail_inp);
+    main_div.appendChild(phone_inp);
+    main_div.appendChild(pass_inp);
+
+    const footer_div = document.createElement('div');
+    footer_div.classList.add('profil-footer');
+    const foot_btn = document.createElement('button');
+    foot_btn.classList.add('profil_footBtn');
+    foot_btn.innerHTML = 'Добавить пользователя';
+    const foot_inp = document.createElement('input');
+    foot_inp.classList.add('profil_footInp');
+    foot_inp.placeholder = 'Название группы';
+    const foot_btn__list = document.createElement('button');
+    foot_btn__list.classList.add('profil_footBtn-list');
+    foot_btn__list.innerHTML = 'Посмотреть список вашей группы';
+
+    footer_div.appendChild(foot_btn);
+    footer_div.appendChild(foot_inp);
+    footer_div.appendChild(foot_btn__list);
+
+    const btns_list = document.createElement('div');
+    btns_list.classList.add('profil_buttons');
+    const delete_profil = document.createElement('button');
+    delete_profil.className = 'profil_btn profil_delete';
+    delete_profil.innerHTML = 'Удалить профиль';
+    const cancel = document.createElement('button');
+    cancel.className = 'profil_btn profil_cancel';
+    cancel.innerHTML = 'Отмена';
+    const save_profil = document.createElement('button');
+    save_profil.className = 'profil_btn profil_save';
+    save_profil.innerHTML = 'Сохранить';
+
+    btns_list.appendChild(delete_profil);
+    btns_list.appendChild(cancel);
+    btns_list.appendChild(save_profil);
+
+    loginBody.appendChild(head_div);
+    loginBody.appendChild(main_div);
+    loginBody.appendChild(footer_div);
+    loginBody.appendChild(btns_list);
+
+    wrapper.appendChild(loginBody);
+
+    body.append(wrapper);
+}
 
 function getRegistered() {
     if (window.location.hash === '#authorization') {
@@ -669,7 +776,7 @@ function setModalWindow(name, number, date, time, target) {
         btn.addEventListener('click', () => {
             redirectAuth();
 
-            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea, number, date);
+            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea, number, date, (time ? time : null));
         })
 
         btns_div.appendChild(btn);
@@ -728,7 +835,7 @@ function setModalColor(target, colorName) {
     target.setAttribute('colorData', colorName);
 }
 
-function setModalButton(number, target, input_name, phone, text_area, date_number, date) { // Запоминаем отмеченные кнопки
+function setModalButton(number, target, input_name, phone, text_area, date_number, date, time) { // Запоминаем отмеченные кнопки
     if (number === 0) {
         if (target.innerHTML === '') deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -743,7 +850,7 @@ function setModalButton(number, target, input_name, phone, text_area, date_numbe
         target.classList.remove('hard_own');
         target.innerHTML = input_name.value;
         saveCheckedPins(target, phone, text_area);
-        sendSavedData(target, input_name.value, phone.value, text_area.value, date_number, date.getMonth(), date.getFullYear());
+        sendSavedData(target, input_name.value, phone.value, text_area.value, date_number, date.getMonth(), date.getFullYear(), time);
     } else {
         deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -755,7 +862,7 @@ function setModalButton(number, target, input_name, phone, text_area, date_numbe
     }
 }
 
-async function sendSavedData(target, name, phone, text_area, date_number, month, year) { // Отправлять дфнные в бд
+async function sendSavedData(target, name, phone, text_area, date_number, month, year, time) { // Отправлять дфнные в бд
     const color = target.getAttribute('colordata') || '';
     let toSend = {
        title: name,
@@ -766,12 +873,12 @@ async function sendSavedData(target, name, phone, text_area, date_number, month,
        month: month,
        year: year
     }
-    toSend = JSON.stringify(toSend);
-    console.log(toSend);
 
     if (time) {
-        
+        toSend.time = time;
     }
+    toSend = JSON.stringify(toSend);
+    console.log(toSend);
 
     await fetch(`${URL_BACKEND}/event`, {
         method: 'POST',
