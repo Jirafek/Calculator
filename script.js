@@ -26,6 +26,10 @@ const cur_date = date.getDate();
 let page = 0;
 let page_obj = {};
 let exe_text_obj = {};
+let user_data = {
+    login: null,
+    session: null,
+};
 
 const header_menu = document.querySelector('.header-profil');
 
@@ -41,7 +45,7 @@ header_menu.addEventListener('click', () => {
     getRegistered();
 });
 
-function profilePage() {
+async function profilePage() {
     const body = document.querySelector('body');
     const currentPage = document.querySelector('.head-page');
     currentPage.classList.add('hide');
@@ -84,20 +88,17 @@ function profilePage() {
     main_div.classList.add('profile-main');
     const login_inp = document.createElement('input');
     login_inp.classList.add('profil-login');
-    login_inp.value = 'Логин';
+    login_inp.value = user_data.login;
     login_inp.placeholder = 'Логин';
     const mail_inp = document.createElement('input');
     mail_inp.classList.add('profil-email');
-    mail_inp.value = 'E-mail';
     mail_inp.placeholder = 'E-mail';
     const phone_inp = document.createElement('input');
     phone_inp.classList.add('profil-phone');
-    phone_inp.value = 'Телефон';
     phone_inp.placeholder = '+7 (_ _ _) _ _ _ - _ _ - _ _';
     const pass_inp = document.createElement('input');
     pass_inp.classList.add('profil-pass');
     pass_inp.type = 'password'
-    pass_inp.value = 'Пароль';
     pass_inp.placeholder = 'Пароль';
 
     main_div.appendChild(login_inp);
@@ -145,6 +146,17 @@ function profilePage() {
     wrapper.appendChild(loginBody);
 
     body.append(wrapper);
+
+    cancel.addEventListener('click', () => {
+        getHeadPage(currentPage);
+    })
+}
+
+function getHeadPage(currentPage) {
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+    inner_wrapper.innerHTML = '';
+    currentPage.classList.remove('hide');
+    window.location.hash = ''
 }
 
 function getRegistered() {
@@ -367,6 +379,10 @@ async function loginClick(headPage) {
     })
     .then(res => {
         alert(res.message);
+        
+        user_data.login = res.login;
+        user_data.session = res.session;
+        console.log(user_data)
 
         const authorization = {
             login: res.login,
