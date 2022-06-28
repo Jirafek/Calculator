@@ -932,7 +932,7 @@ i {
 }
 
 .profil_footBtn-list {
-    width: 100%;
+    width: 100% !important;
 }
 
 .profile-nick {
@@ -1192,6 +1192,53 @@ i {
 }
 
 @media (max-width: 870px) {
+
+    
+    .profile-head {
+        margin-bottom: 45px;
+    }
+
+    .profile-nick, .profil-login, .profil-email, .profil-phone, .profil-pass {
+        font-size: 16px;
+        height: 50px;
+    }
+    
+    .profil_footBtn, .profil_footInp, .profil_footBtn-list {
+        font-size: 17px;
+        width: 215px;
+        height: 45px;
+    }
+    
+    .profil-login, .profil-email, .profil-phone, .profil-pass {
+        width: 215px;
+    }
+
+    .profile-main {
+        margin-bottom: 101px;
+    }
+
+    .profile-photo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-nick {
+        width: 350px;
+    }
+
+    .profil_buttons {
+        width: 100%;
+        display: flex;
+        row-gap: 20px;
+        flex-direction: column-reverse;
+    }
+    
+    .profil_btn {
+        padding: 0;
+        width: 100%;
+        height: 50px;
+        font-size: 20px;
+    }
 
     .modal_window {
         width: 520px;
@@ -1469,6 +1516,55 @@ i {
 }
 
 @media (max-width: 530px) {
+
+    .dop_body-lg {
+        padding: 0 20px;
+    }
+
+    .profile-head {
+        margin-bottom: 35px;
+    }
+
+    .profile-nick, .profil-login, .profil-email, .profil-phone, .profil-pass {
+        font-size: 16px;
+        height: 40px;
+    }
+    
+    .profil_footBtn, .profil_footInp, .profil_footBtn-list {
+        font-size: 17px;
+        width: 100%;
+        height: 45px;
+    }
+    
+    .profil-login, .profil-email, .profil-phone, .profil-pass {
+        width: 230px;
+    }
+
+    .profil-footer {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 60px;
+    }
+
+    .profile-main {
+        margin-bottom: 70px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-photo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .profile-nick {
+        width: 250px;
+    }
+    
+    .profil_btn {
+        height: 45px;
+        font-size: 17px;
+    }
 
     .modal_window {
         width: 375px;

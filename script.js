@@ -77,7 +77,6 @@ async function profilePage() {
     const nickname = document.createElement('input');
     nickname.classList.add('profile-nick');
     nickname.type = 'text';
-    nickname.value = 'Никнейм';
     nickname.placeholder = 'Никнейм';
 
     image_body.appendChild(image);
