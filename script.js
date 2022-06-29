@@ -526,7 +526,7 @@ function setMiniCalendar(date) {
 
     const name_div = document.createElement('div');
     name_div.classList.add('miniC_name');
-    name_div.innerHTML = `${month} - ${year}`;
+    name_div.innerHTML = `${month} ${year}`;
 
     const data_div = document.createElement('div');
     data_div.classList.add('miniC_data');
@@ -552,6 +552,7 @@ function setMiniCalendar(date) {
         div.classList.add('miniC-item');
 
         if (days.includes(el)) div.classList.add('miniC-day_name');
+        else div.classList.add('miniC-number');
 
         if (cur_date === el) div.classList.add('current_date');
 
@@ -1025,7 +1026,7 @@ function arrowL() { // Предыдущая неделя
     changePage();
 }
 
-function createHighterState() { // Создание верхних шкал
+async function createHighterState() { // Создание верхних шкал
     const HIGHTER_STATE_POSITIONS = 28;
     highterMenu_state.innerHTML = '';
     let data_number = 0;
