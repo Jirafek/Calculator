@@ -1,3 +1,5 @@
+import { buy_data, buy_btns } from './utils/script_helper.js';
+
 const URL_BACKEND = 'https://bsspo.store/http';
 
 const highterMenu_name = document.querySelector('.day_name');
@@ -26,10 +28,13 @@ const cur_date = date.getDate();
 let page = 0;
 let page_obj = {};
 let exe_text_obj = {};
+let AVAILIBLE_LINES = 4;
+let AVAILIBLE_PEOPLE = 0;
 let user_data = {
     login: null,
     session: null,
 };
+
 
 const header_menu = document.querySelector('.header-profil');
 
@@ -145,6 +150,10 @@ async function profilePage() {
     wrapper.appendChild(loginBody);
 
     body.append(wrapper);
+
+    foot_btn.addEventListener('click', () => {
+        createBuyPage(buy_data.add_person, null)
+    })
 
     cancel.addEventListener('click', () => {
         getHeadPage(currentPage);
@@ -396,6 +405,10 @@ async function loginClick(headPage) {
 
         window.location.hash = ""
     })
+
+    await fetch(`${URL_BACKEND}/event?month=5`)
+    .then(res => res.json())
+    .then(data => console.log(data))
     
 }
 
@@ -1027,7 +1040,7 @@ function arrowL() { // Предыдущая неделя
 }
 
 async function createHighterState() { // Создание верхних шкал
-    const HIGHTER_STATE_POSITIONS = 28;
+    const HIGHTER_STATE_POSITIONS = AVAILIBLE_LINES * 7;
     highterMenu_state.innerHTML = '';
     let data_number = 0;
     for (let i=0; i<HIGHTER_STATE_POSITIONS; i++) {
@@ -1043,6 +1056,131 @@ async function createHighterState() { // Создание верхних шка�
         data_number++;
         if (data_number > 6) data_number = 0;
     }
+    const adish_btn = document.createElement('button');
+    adish_btn.classList.add('high_menu_state_btn');
+    adish_btn.innerHTML = 'Добавить Дополнительные ячейки';
+
+    adish_btn.addEventListener('click', () => {
+        createBuyPage(buy_data.add_cell, 1)
+    })
+
+    highterMenu_state.appendChild(adish_btn);
+}
+
+function createBuyPage(text_data, data_mean) {
+    const body = document.querySelector('body');
+    const currentPage = document.querySelector('.head-page');
+    currentPage.classList.add('hide');
+
+    let wrapper;
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+
+    if (inner_wrapper)
+        wrapper = inner_wrapper;
+    else 
+        wrapper = document.createElement('div');
+    
+    wrapper.classList.add('dop_wrapper');
+    wrapper.innerHTML = ''
+
+    const head = document.createElement('div');
+    head.className = `dop_head ${text_data.title.split(':')[1]}`;
+    head.innerHTML = text_data.title.split(':')[0];
+    
+    const adish_body = document.createElement('div');
+    adish_body.className = 'dop_body buy_menu';
+    const head_text = document.createElement('div');
+    head_text.classList.add(text_data.header.split(':')[1]);
+    head_text.innerHTML = text_data.header.split(':')[0];
+    const main_text = document.createElement('div');
+    main_text.classList.add(text_data.main.split(':')[1]);
+    main_text.innerHTML = text_data.main.split(':')[0];
+    const btns_block = document.createElement('div');
+    btns_block.classList.add('buy_menu-btns');
+    btns_block.innerHTML = createBuyMenuButtons();
+    const cancel_btn = document.createElement('button');
+    cancel_btn.classList.add('menu-btns_cancel');
+    cancel_btn.innerHTML = 'Отмена';
+
+    btns_block.appendChild(cancel_btn);
+
+    adish_body.appendChild(head_text);
+    adish_body.appendChild(main_text);
+    adish_body.appendChild(btns_block);
+
+    const footer = document.createElement('div');
+    footer.classList.add('dop_footer');
+    const footer_text = document.createElement('div');
+    footer_text.classList.add(text_data.footer.split(':')[1]);
+    footer_text.innerHTML = text_data.footer.split(':')[0];
+
+    footer.appendChild(footer_text);
+    footer.appendChild(createBuyMenuFooter(data_mean));
+
+    wrapper.appendChild(head);
+    wrapper.appendChild(adish_body);
+    wrapper.appendChild(footer);
+
+    body.append(wrapper);
+
+    cancel_btn.addEventListener('click', () => {
+        getBack(data_mean, wrapper)
+    })
+}
+
+function getBack(data_mean, wrapper) {
+    if (data_mean) {
+        const currentPage = document.querySelector('.head-page');
+        getHeadPage(currentPage)
+    } else {
+        wrapper.innerHTML = '';
+        profilePage();
+    }
+}
+
+function createBuyMenuFooter(data_mean) {
+    let all_btns = document.createElement('div');
+    all_btns.classList.add('footer_btns')
+    for (let i=0; i<buy_btns.length + 1; i++) {
+        let j = i < 2 ? i : i - 1
+        const btn = document.createElement('div');
+        btn.classList.add('footer_btns-item');
+        if (i === 2) {
+            btn.innerHTML = data_mean ? AVAILIBLE_LINES : AVAILIBLE_PEOPLE;
+            btn.style.color = '#FD79A8'
+            all_btns.appendChild(btn);
+            continue;
+        }
+        btn.innerHTML = `+${buy_btns[j].number}`;
+        btn.style.color = buy_btns[j].color;
+        all_btns.appendChild(btn);
+    }
+
+    return all_btns;
+}
+
+function createBuyMenuButtons() {
+    let all_btns = ''
+    let block1 = ''
+    let block2 = ''
+    for (let i=0; i<buy_btns.length; i++) {
+        const btn = `
+            <div class="menu_btn">
+                <div style="color: ${buy_btns[i].color};" class="menu_btn-number">
+                    +${buy_btns[i].number}
+                </div>
+                <div style="color: ${buy_btns[i].color};" class="menu_btn-average">
+                    ${buy_btns[i].average}
+                </div>
+            </div>
+        `
+        if (i < 2) block1 += btn
+        else block2 += btn
+    }
+    all_btns += `<div class="buy_menu-first">${block1}</div>`;
+    all_btns += `<div class="buy_menu-second">${block2}</div>`;
+    
+    return all_btns;
 }
 
 function createLowerState() { // Создание всех временных шкал

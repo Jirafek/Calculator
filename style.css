@@ -13,6 +13,10 @@
 	src: url(./fonts/Inter-Regular.woff); 
 }
 
+button {
+    cursor: pointer;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -49,7 +53,7 @@ body {
     transform: translate(-50%);
 }
 
-.dop_head {
+.dop_head , .dop_footer{
     width: 100%;
     height: 204px;
     background-color: #2D3436;
@@ -60,11 +64,16 @@ body {
     font-family: 'Jost';
     font-style: normal;
     font-weight: 500;
-    font-size: 75px;
+    font-size: 4.6em;
     line-height: 108px;
     text-transform: uppercase;
     color: #FFFFFF;
     margin-bottom: 26px;
+}
+
+.dop_footer {
+    border-radius: 40px 40px 0 0;
+    margin-bottom: 0;
 }
 
 .dop_body, .dop_body-lg {
@@ -76,6 +85,126 @@ body {
     background-color: #2D3436;
     border-radius: 60px;
     margin-bottom: 50px;
+}
+
+.buy_menu {
+    margin-bottom: 26px;
+    padding: 0 52px;
+}
+
+.cell_header-text, .cell_main-text, .person_header-text, .person_main-text {
+    margin: 30px 0 80px 0;
+    text-align: center;
+    width: 100%;
+    height: 180px;
+    color: #FF9898;
+    font-size: 2.25em;
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.cell_main-text, .person_main-text {
+    color: #318F75;
+    height: auto;
+    margin: 0;
+}
+
+.buy_menu-first, .buy_menu-second {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+}
+
+.buy_menu-second {
+    margin: 0 50px;
+}
+
+.buy_menu-btns {
+    margin-top: 20px;
+    display: flex;
+}
+
+.menu_btn {
+    cursor: pointer;
+    display: flex;
+    height: 67px;
+}
+
+.menu_btn-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 67px;
+    height: 100%;
+    border-radius: 80px 0 0 80px;
+    margin-right: 3px;
+    background-color: white;
+    font-size: 1.25em;
+}
+
+.menu_btn-average {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0 80px 80px 0;
+    height: 100%;
+    width: 138px;
+    font-size: 1.25em;
+}
+
+.menu-btns_cancel {
+    height: 67px;
+    width: 162px;
+    color: #FD79A8;
+    background: #FFFFFF;
+    border: 1px solid #FD79A8;
+    border-radius: 80px;
+    font-size: 1.5em;
+    align-self: flex-end;
+}
+
+.dop_footer {
+    padding: 0 50px;
+    justify-content: unset;
+    flex-direction: column;
+    text-align: center;
+    line-height: 40px;
+    align-items: center;
+}
+
+.cell_footer-text, .person_footer-text {
+    font-size: 0.4em;
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+.footer_btns {
+    height: 67px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer_btns-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 67px;
+    height: 67px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    line-height: 35px;
+    margin-top: 55px;
+    font-size: 0.3em;
+}
+
+.footer_btns-item:nth-child(3) {
+    font-size: 0.5em;
+    margin-top: 0;
 }
 
 .innerIn-input {
@@ -488,6 +617,28 @@ i {
     width: 210px;
     height: 62px;
     cursor: pointer;
+}
+
+.high_menu_state_btn {
+    height: 62px;
+    width: 100%;
+    cursor: pointer;
+    background: #FFFFFF;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 0px 0px 40px 0px;
+    font-family: 'Jost';
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+}
+
+.cell_title-text {
+    font-size: 2em;
+}
+
+.person_title-text {
+    font-size: 3em;
 }
 
 .low_menu-state-item, .high_menu-state-item {
@@ -1082,6 +1233,10 @@ i {
         height: 43px;
     }
 
+    .high_menu_state_btn {
+        height: 43px;
+    }
+
     .high_menu-state {
         max-height: calc(43px * 2);
     }
@@ -1124,6 +1279,11 @@ i {
     .high_menu-state-item, .low_menu-state-item, .time-item {
         width: 103px;
         height: 30px;
+    }
+
+    .high_menu_state_btn {
+        height: 30px;
+        font-size: 17px;
     }
 
     .high_menu-state {
@@ -1373,7 +1533,7 @@ i {
     
     .dop_head {
         height: 143px;
-        font-size: 65px;
+        font-size: 4em;
     }
 
     .dop_body {
@@ -1441,6 +1601,12 @@ i {
     .high_menu-state-item, .low_menu-state-item, .time-item {
         width: 62px;
         height: 18px;
+    }
+
+    .high_menu_state_btn {
+        height: 18px;
+        font-size: 12px;
+        line-height: 18px;
     }
 
     .high_menu-state {
@@ -1700,7 +1866,7 @@ i {
     }
 
     .dop_head-logup {
-        font-size: 45px;
+        font-size: 2.8em;
     }
 
     .inner_scinny-btn {
@@ -1730,6 +1896,14 @@ i {
         width: 44px;
         height: 44px;
     }
+
+    .high_menu_state_btn {
+        height: 44px;
+        font-size: 1em;
+        line-height: 18px;
+        border-radius: 0 0 16px 0;
+    }
+
     .high_menu-logo {
         width: 44px;
         height: 129px;
