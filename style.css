@@ -1419,19 +1419,32 @@ i {
         font-size: 1.5em !important;
     }
 
-    .cell_header-text {
+    .person_title-text {
+        font-size: 2em !important;
+    }
+
+    .cell_header-text, .person_header-text {
         margin: 20px 0 85px 0;
         height: 100px;
         font-size: 2em;
     }
 
-    .cell_main-text {
+    .person_header-text {
+        margin-bottom: 40px;
+        font-size: 1.6em;
+    }
+
+    .cell_main-text, .person_main-text {
         font-size: 2em;
     }
 
-    .cell_footer-text {
+    .cell_footer-text, .person_footer-text {
         font-size: 0.3em;
         margin-top: 15px;
+    }
+
+    .person_footer-text {
+        font-size: 0.26em;
     }
 
     .profile-head {
@@ -1793,17 +1806,30 @@ i {
         font-size: 1em !important;
     }
 
-    .cell_header-text {
+    .person_title-text {
+        font-size: 1.5em !important;
+    }
+
+    .cell_header-text, .person_header-text {
         margin: 20px 0 40px 0;
         height: 60px;
         font-size: 1.3em;
     }
 
-    .cell_main-text {
+    .person_header-text {
+        height: 75px;
+    }
+
+    .cell_main-text, .person_main-text {
         font-size: 1.3em;
     }
 
     .cell_footer-text {
+        font-size: 0.25em;
+        margin-top: 15px;
+    }
+
+    .person_footer-text {
         font-size: 0.25em;
         margin-top: 15px;
     }
