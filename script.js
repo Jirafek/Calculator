@@ -155,6 +155,10 @@ async function profilePage() {
         createBuyPage(buy_data.add_person, null)
     })
 
+    foot_btn__list.addEventListener('click', () => {
+        createBuyPage(buy_data.add_person, null)
+    })
+
     cancel.addEventListener('click', () => {
         getHeadPage(currentPage);
     })
@@ -1138,7 +1142,7 @@ function getBack(data_mean, wrapper) {
     }
 }
 
-function createBuyMenuFooter(data_mean) {
+function createBuyMenuFooter(data_mean) { 
     let all_btns = document.createElement('div');
     all_btns.classList.add('footer_btns')
     for (let i=0; i<buy_btns.length + 1; i++) {
