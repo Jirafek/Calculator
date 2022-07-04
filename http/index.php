@@ -36,6 +36,10 @@ if ($param[0] === 'group_user') {
     require_once 'group.user.php';
 }
 
+if ($param[0] === 'group_user') {
+    require_once 'group.user.php';
+}
+
 // if ($param[0] === 'session') {
 //     echo json_encode($_SESSION['user']);
 // }

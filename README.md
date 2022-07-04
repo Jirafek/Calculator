@@ -4,7 +4,7 @@ https://{url}/http/authorization?type={registration || log || social || session 
 
 log = { "login": "", "password": "" }
 
-session // данные из localStorage (login, session)
+session // данные из localStorage {login, session}
 
 social // в доработке
 
