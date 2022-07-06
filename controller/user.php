@@ -21,7 +21,27 @@ function editPassword($id, $data) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
 
+    $email = $data['email'];
+    $code = $data['code'];
     $password = $data['password'];
+
+    $email = protectionData($email);
+    $code = protectionData($code);
+    $password = protectionData($password);
+
+    $check_code = EmailCode::confirm($email, $code);
+
+    if (!$check_code) {
+        http_response_code(401);
+
+        $message = [
+            'message' => 'Не правильный код',
+            'status' => false,
+        ];
+
+        echo json_encode($message);
+        return;
+    }
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -55,10 +75,26 @@ function editPersonalData($id, $data) {
     $login = $data['login'];
     $email= $data['email'];
     $telephone = $data['telephone'];
+    $password = $data['password'];
 
     $login = protectionData($login);
     $email= protectionData($email);
     $telephone = protectionData($telephone);
+    $password = protectionData($password);
+
+    $password_hash = Authorization::getUser($login)['password'];
+
+    if (!password_verify($password, $password_hash)) {
+        http_response_code(400);
+        
+        $message = [
+            'message' => 'Неправильный пароль',
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
 
     $query = User::edit($id, $login, $email, $telephone);
 

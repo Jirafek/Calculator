@@ -40,4 +40,6 @@ foreach ($_GET as $req => $type) {
 
 $where_param = mb_substr($where_param, 0, -1);
 
+$type = $_GET['type'];
+
 ?>

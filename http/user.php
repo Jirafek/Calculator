@@ -3,7 +3,8 @@
 $type = $_GET['type'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'PATCH') {
-    if ($type === 'password') {
+
+    if ($type === 'edit_passsword') {
         editPassword($_SESSION['user']['user_id'], $_POST);
     }
     
