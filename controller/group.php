@@ -26,8 +26,8 @@ function createGroup($data, $user_id) {
         $errors[] = 'Название группы меньше 4 символов';
     }
 
-    if (Globals::checkCount('group_user', 'user_id', $user_id) > 0) {
-        $errors[] = 'Вы уже состоите в группе';
+    if (Globals::checkCount('group', 'user_id', $user_id) > 0) {
+        $errors[] = 'Вы уже создали группу';
     }
 
     if (Globals::checkCount('group', 'group_name', $group_name) > 0) {
