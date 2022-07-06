@@ -7,8 +7,19 @@ class EmailCode {
 
         $email = $data['email'];
 
+        $email = protectionData($email);
+
         $_SESSION['confirm']['email'] = $email;
         $_SESSION['confirm']['code'] = random_int(10000, 99999);
+
+        $to      = "$email";
+        $subject = 'Восстановление пароля';
+        $message = 'hello';
+        $headers = 'From: webmaster@example.com'       . "\r\n" .
+                    'Reply-To: webmaster@example.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
     }
 
     static public function confirm($email, $code) {
