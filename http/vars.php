@@ -24,11 +24,11 @@ foreach ($_GET as $req => $type) {
         continue;
     }
 
-    if ($type = 'event_id') {
+    if ($type === 'event_id') {
         continue;
     }
 
-    if ($type = 'group_id') {
+    if ($type === 'group_id') {
         continue;
     }
 

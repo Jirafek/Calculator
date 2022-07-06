@@ -26,4 +26,6 @@ require_once 'controller/group.php';
 require_once 'model/group.user.php';
 require_once 'controller/group.user.php';
 
+require_once 'controller/email.php';
+
 ?>

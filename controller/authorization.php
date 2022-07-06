@@ -165,7 +165,7 @@ function checkCookieSession($data) {
     $session = Authorization::checkCookieSession($login, $session);
 
     if (!$session) {
-        http_response_code(404);
+        http_response_code(400);
 
         $message = [
             'message' => 'Сессии не существует',
