@@ -15,8 +15,8 @@ class EmailCode {
         $to      = "$email";
         $subject = 'Восстановление пароля';
         $message = 'hello';
-        $headers = 'From: webmaster@example.com'       . "\r\n" .
-                    'Reply-To: webmaster@example.com' . "\r\n" .
+        $headers = 'From: mail@bsspo.ru' . "\r\n" .
+                    'Reply-To: mail@bsspo.ru' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
         mail($to, $subject, $message, $headers);

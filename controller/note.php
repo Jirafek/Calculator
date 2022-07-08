@@ -23,6 +23,16 @@ function createNote($data, $author_id, $group_id) {
     $month = (int) $month;
     $year = (int) $year;
 
+    if ($group_id) {
+        $group = Globals::getData('group', 'group_id', $group_id);
+
+        if ($group['note_limit'] >= $group['note_count']) {
+            http_response_code(400);
+
+            $errors[] = 'Достигнут лимит создания записей';
+        }
+    }
+
     if (!$author_id) {
         http_response_code(401);
 
