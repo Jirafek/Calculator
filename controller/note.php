@@ -31,6 +31,14 @@ function createNote($data, $author_id, $group_id) {
 
             $errors[] = 'Достигнут лимит создания записей';
         }
+    } else {
+        $user = Globals::checkCount('note', 'author_id', $author_id);
+
+        if ($user >= 4) {
+            http_response_code(400);
+
+            $errors[] = 'Достигнут лимит создания записей';
+        }
     }
 
     if (!$author_id) {
