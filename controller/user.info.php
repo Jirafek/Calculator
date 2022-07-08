@@ -40,4 +40,71 @@ function getUserInfo($user_id) {
     
 // }
 
+function editAvatar($user_id, $image) {
+    $errors = [];
+
+    if (!$user_id) {
+        $errors[] = 'Нет авторизации';
+    }
+
+    if ($image['name'] !== '') {
+        $errors[] = 'Нет картинки';
+    }
+
+    if ($image['type'] !== 'image/jpeg' && $image['type'] !== 'image/png' && $image['type'] !== "") {
+        $errors[] = 'Не поддерживается формат картинки';
+    }
+
+    if (!empty($errors)) {
+        http_response_code(400);
+
+        $message = [
+            'message' => array_shift($errors),
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    $path_img = '../img';
+    $upload_img = random_int(10000, 99999) . time() . '.png';
+
+    if (!move_uploaded_file($image['tmp_name'], $path_img . $upload_img)) {
+        http_response_code(400);
+
+        $message = [
+            'message' => 'Изображение не загрузилось',
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    $edit_avatar = UserInfo::updateAvatar($user_id, $upload_img);
+
+    if (!$edit_avatar) {
+        http_response_code(400);
+
+        $message = [
+            'message' => 'Изображение не загрузилось',
+            'status' => false
+        ];
+
+        echo json_encode($message);
+        return;
+    }
+
+    http_response_code(201);
+
+    $message = [
+        'message' => 'Изображение обновлено',
+        'status' => true
+    ];
+
+    echo json_encode($message);
+    return;
+}
+
 ?>

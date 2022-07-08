@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         createUserInfo($_POST, $_SESSION['user']['user_id']);
     }
 
-    if ($type === 'avatar') {
-        
+    if ($type === 'edit_avatar') {
+        editAvatar($_SESSION['user']['user_id'], $_FILES);
     }
 }
 
