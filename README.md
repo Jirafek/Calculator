@@ -10,7 +10,7 @@ social // в доработке
 
 exit // выход из учётной записи
 
-https://{url}/http/user?type={personal_data || edit_passsword} - METHOD "POST" personal_data = { "login": "", "email": "", "telephone": "", "password": "" }, edit_passsword { "email": "", "code": "", "password": "" }
+https://{url}/http/user?type={personal_data || edit_passsword} - METHOD "PUT" || "PATCH" personal_data = { "login": "", "email": "", "telephone": "", "password": "" }, edit_passsword { "email": "", "code": "", "password": "" }
 
 https://{url}/http/email?type={create_code} - METHOD "POST" create_code = { "email": "" }
 

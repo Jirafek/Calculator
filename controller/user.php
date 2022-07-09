@@ -82,7 +82,7 @@ function editPersonalData($id, $data) {
     $telephone = protectionData($telephone);
     $password = protectionData($password);
 
-    $password_hash = Authorization::getUser($login)['password'];
+    $password_hash = Globals::getData('user', 'user_id', $id)['password'];
 
     if (!password_verify($password, $password_hash)) {
         http_response_code(400);

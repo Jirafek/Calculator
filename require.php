@@ -6,6 +6,9 @@ require_once 'include/connect.php';
 require_once 'model/globals.php';
 require_once 'controller/global.php';
 
+require_once 'model/user.php';
+require_once 'controller/user.php';
+
 require_once 'model/user.info.php';
 require_once 'controller/user.info.php';
 
