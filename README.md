@@ -17,6 +17,8 @@ https://{url}/http/email?type={create_code} - METHOD "POST" create_code = { "ema
 https://{url}/http/user_info/ - METHOD "GET" // получение информации о пользователе, если он авторизован
 https://{url}/http/user_info/{id} - METHOD "GET" // получение информации о пользователе
 
+https://{url}/http/user_info/{ null || edit_avatar} - METHOD "POST" null (ничего не надо ставить) = {}
+
 https://{url}/http/group/{id} -  METHOD "GET" // получение списка участников группы и уровень привелегий пользователя (1 - только просмотр, 2 - создание записей, 3 - создание событий из дат, 4 - полный доступ)
 https://{url}/http/group - METHOD "POST" { "group_name": "" // есть проверка на название группы, пользователь не сможет присоединиться, если уже состоит }
 
