@@ -51,7 +51,8 @@ export default function Profile() {
                         <input type="password" className="profil-pass" placeholder="Пароль" {...register("password", { minLength: 8 })} />
                     </div>
                     <div className="profil-footer">
-                        <button className="profil_footBtn">Добавить пользователя</button>
+                        <Link to="/people-space"><button className="profil_footBtn">Добавить пользователя</button></Link>
+                        
                         <input type="text" className="profil_footInp" placeholder="Название группы" />
                         <button className="profil_footBtn-list">Посмотреть список вашей группы</button>
                     </div>

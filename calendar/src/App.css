@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.loading_gif {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    width: 300px;
+    height: 300px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -239,6 +249,7 @@ body {
     line-height: 35px;
     margin-top: 55px;
     font-size: 0.3em;
+    border: none;
 }
 
 .footer_btns-item:nth-child(3) {

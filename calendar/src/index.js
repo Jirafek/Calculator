@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <LazyMotion features={domAnimation} strict>
-      <Suspense fallback={<h1 style={{ textAlign: 'center' }}>Loading...</h1>}>
+      <Suspense fallback={<img src="./gif/loading.gif" className="loading_gif" alt="Loading"/>}>
         <BrowserRouter>
           <App />
         </BrowserRouter>

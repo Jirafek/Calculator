@@ -70,7 +70,7 @@ export default function HihterMenu(params) {
         <main className="main">
             <div className="high_menu">
                 <div className="high_menu-logo">
-                    <img className="high_menu-logo-img" src="./img//Logo.png" alt="logo" height="167" width="167" />
+                    <img className="high_menu-logo-img" src="./img/Logo.png" alt="logo" height="167" width="167" />
                 </div>
                 <div className="high_menu-right">
                     <div className="day_name">{highterStateItems()}</div>

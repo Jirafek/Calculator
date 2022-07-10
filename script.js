@@ -1,3 +1,7 @@
+import { buy_data, buy_btns } from './utils/script_helper.js';
+
+const URL_BACKEND = 'https://bsspo.store/http';
+
 const highterMenu_name = document.querySelector('.day_name');
 const highterMenu_state = document.querySelector('.high_menu-state');
 const lowerMenu_state = document.querySelector('.low_menu-state');
@@ -24,18 +28,156 @@ const cur_date = date.getDate();
 let page = 0;
 let page_obj = {};
 let exe_text_obj = {};
+let AVAILIBLE_LINES = 4;
+let AVAILIBLE_PEOPLE = 0;
+let user_data = {
+    login: null,
+    session: null,
+};
+
 
 const header_menu = document.querySelector('.header-profil');
 
 header_menu.addEventListener('click', () => {
+    if (localStorage.getItem('auth')) {
+        window.location.hash = '#profile';
+        profilePage();
+        return;
+    }
+
+    window.location.hash = '#authorization'
+    
     getRegistered();
 });
 
-function getRegistered() {
+async function profilePage() {
     const body = document.querySelector('body');
     const currentPage = document.querySelector('.head-page');
     currentPage.classList.add('hide');
-    createLoginPage(currentPage, body);
+
+    let wrapper;
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+
+    if (inner_wrapper)
+        wrapper = inner_wrapper;
+    else 
+        wrapper = document.createElement('div');
+    
+    wrapper.classList.add('dop_wrapper');
+
+    const head = document.createElement('div');
+    head.classList.add('dop_head');
+    head.innerHTML = 'Профиль';
+    wrapper.appendChild(head);
+    
+    const loginBody = document.createElement('div');
+    loginBody.classList.add('dop_body-lg');
+
+    const head_div = document.createElement('div');
+    head_div.classList.add('profile-head')
+    const image_body = document.createElement('div');
+    image_body.classList.add('profile-photo');
+    const image = document.createElement('div');
+    image.classList.add('profile-photo_item');
+    const nickname = document.createElement('input');
+    nickname.classList.add('profile-nick');
+    nickname.type = 'text';
+    nickname.placeholder = 'Никнейм';
+
+    image_body.appendChild(image);
+    head_div.appendChild(image_body);
+    head_div.appendChild(nickname);
+
+    const main_div = document.createElement('div');
+    main_div.classList.add('profile-main');
+    const login_inp = document.createElement('input');
+    login_inp.classList.add('profil-login');
+    login_inp.value = user_data.login;
+    login_inp.placeholder = 'Логин';
+    const mail_inp = document.createElement('input');
+    mail_inp.classList.add('profil-email');
+    mail_inp.placeholder = 'E-mail';
+    const phone_inp = document.createElement('input');
+    phone_inp.classList.add('profil-phone');
+    phone_inp.placeholder = '+7 (_ _ _) _ _ _ - _ _ - _ _';
+    const pass_inp = document.createElement('input');
+    pass_inp.classList.add('profil-pass');
+    pass_inp.type = 'password'
+    pass_inp.placeholder = 'Пароль';
+
+    main_div.appendChild(login_inp);
+    main_div.appendChild(mail_inp);
+    main_div.appendChild(phone_inp);
+    main_div.appendChild(pass_inp);
+
+    const footer_div = document.createElement('div');
+    footer_div.classList.add('profil-footer');
+    const foot_btn = document.createElement('button');
+    foot_btn.classList.add('profil_footBtn');
+    foot_btn.innerHTML = 'Добавить пользователя';
+    const foot_inp = document.createElement('input');
+    foot_inp.classList.add('profil_footInp');
+    foot_inp.placeholder = 'Название группы';
+    const foot_btn__list = document.createElement('button');
+    foot_btn__list.classList.add('profil_footBtn-list');
+    foot_btn__list.innerHTML = 'Посмотреть список вашей группы';
+
+    footer_div.appendChild(foot_btn);
+    footer_div.appendChild(foot_inp);
+    footer_div.appendChild(foot_btn__list);
+
+    const btns_list = document.createElement('div');
+    btns_list.classList.add('profil_buttons');
+    const delete_profil = document.createElement('button');
+    delete_profil.className = 'profil_btn profil_delete';
+    delete_profil.innerHTML = 'Удалить профиль';
+    const cancel = document.createElement('button');
+    cancel.className = 'profil_btn profil_cancel';
+    cancel.innerHTML = 'Отмена';
+    const save_profil = document.createElement('button');
+    save_profil.className = 'profil_btn profil_save';
+    save_profil.innerHTML = 'Сохранить';
+
+    btns_list.appendChild(delete_profil);
+    btns_list.appendChild(cancel);
+    btns_list.appendChild(save_profil);
+
+    loginBody.appendChild(head_div);
+    loginBody.appendChild(main_div);
+    loginBody.appendChild(footer_div);
+    loginBody.appendChild(btns_list);
+
+    wrapper.appendChild(loginBody);
+
+    body.append(wrapper);
+
+    foot_btn.addEventListener('click', () => {
+        createBuyPage(buy_data.add_person, null)
+    })
+
+    foot_btn__list.addEventListener('click', () => {
+        createBuyPage(buy_data.add_person, null)
+    })
+
+    cancel.addEventListener('click', () => {
+        getHeadPage(currentPage);
+    })
+}
+
+function getHeadPage(currentPage) {
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+    inner_wrapper.innerHTML = '';
+    currentPage.classList.remove('hide');
+    window.location.hash = ''
+}
+
+function getRegistered() {
+    if (window.location.hash === '#authorization') {
+        const body = document.querySelector('body');
+        const currentPage = document.querySelector('.head-page');
+        currentPage.classList.add('hide');
+        createLoginPage(currentPage, body);
+    }
 }
 
 function createLoginPage(currentPage, body) {
@@ -66,9 +208,9 @@ function createLoginPage(currentPage, body) {
     pass_input.type = 'password';
     pass_input.placeholder = 'Пароль';
     const login_btn = document.createElement('button');
-    login_btn.innerHTML = 'Вход';
+    login_btn.textContent = 'Вход';
     const logup_btn = document.createElement('button');
-    logup_btn.innerHTML = 'Регистрация';
+    logup_btn.textContent = 'Регистрация';
 
     login_input.className = 'innerIn-login innerIn-input';
     pass_input.className = 'innerIn-pass innerIn-input';
@@ -99,6 +241,14 @@ function createLoginPage(currentPage, body) {
     login_innerBtns.appendChild(yandex_btn);
     login_innerBtns.appendChild(vk_button);
 
+    yandex_btn.addEventListener("click", e => {
+        window.location.href = 'https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store#authorization';
+    })
+
+    vk_button.addEventListener("click", e => {
+        window.location.href = 'https://oauth.yandex.ru/authorize?client_id=f3a489077b5443fc98ac80a538070717&response_type=token&redirect_uri=https://bsspo.store#authorization';
+    })
+
     loginBody.appendChild(login_input);
     loginBody.appendChild(pass_input);
     loginBody.appendChild(btns_div);
@@ -119,11 +269,11 @@ function createLoginPage(currentPage, body) {
 
 function logupClick(headPage, body) {
     const wrapper = document.querySelector('.dop_wrapper');
-    wrapper.innerHTML = '';
+    wrapper.textContent = '';
 
     const head = document.createElement('div');
     head.className = 'dop_head dop_head-logup';
-    head.innerHTML = 'Регистрация';
+    head.textContent = 'Регистрация';
     wrapper.appendChild(head);
 
     const loginBody = document.createElement('div');
@@ -188,33 +338,117 @@ function logupClick(headPage, body) {
     })
 }
 
-function saveRegisteredData(login_inp, email_inp, pass_inp, headPage) {
+async function saveRegisteredData(login_inp, email_inp, pass_inp, headPage) {
     const login = login_inp.value;
     const email = email_inp.value;
     const password = pass_inp.value;
     const not_errors = validation(email);
     if (!not_errors) return;
-    
-    console.log(login, password, email); // Тут будет fetch
 
+    await fetch(`${URL_BACKEND}/authorization?type=registration`, {
+        method: 'POST',
+        body: JSON.stringify({login, password, email})
+    })
+    .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.json();
+        } 
 
-    const curPage = document.querySelector('.dop_wrapper');
-    curPage.innerHTML = '';
-    createLoginPage(headPage, document.querySelector('body'));
+        throw res.json();
+    })
+    .catch(res => {
+        alert(res.message);
+    })
+    .then(res => {
+        alert(res.message);
+
+        const curPage = document.querySelector('.dop_wrapper');
+        curPage.innerHTML = '';
+        createLoginPage(headPage, document.querySelector('body'));
+        window.location.hash = ""
+    })
 }
 
-function loginClick(headPage) {
+async function loginClick(headPage) {
     const login = document.querySelector('.innerIn-login').value;
     const password = document.querySelector('.innerIn-pass').value;
     const not_errors = validation(null);
     if (!not_errors) return;
-    
-    console.log(login, password); // Тут будет fetch
 
+    await fetch(`${URL_BACKEND}/authorization?type=log`, {
+        method: 'POST',
+        body: JSON.stringify({login, password})
+    })
+    .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.json();
+        } 
+
+        throw res.json();
+    })
+    .catch(res => {
+        alert(res.message);
+    })
+    .then(res => {
+        alert(res.message);
+        
+        user_data.login = res.login;
+        user_data.session = res.session;
+        console.log(user_data)
+
+        const authorization = {
+            login: res.login,
+            session: res.session
+        };
+
+        localStorage.setItem('auth', JSON.stringify(authorization));
+
+        const curPage = document.querySelector('.dop_wrapper');
+        curPage.innerHTML = '';
+        headPage.classList.remove('hide');
+
+        window.location.hash = ""
+    })
+
+    await fetch(`${URL_BACKEND}/event?month=5`)
+    .then(res => res.json())
+    .then(data => console.log(data))
     
-    const curPage = document.querySelector('.dop_wrapper');
-    curPage.innerHTML = '';
-    headPage.classList.remove('hide');
+}
+
+async function redirectAuth() {
+    await checkSession(localStorage.auth);
+
+    if (!localStorage.getItem('auth')) {
+        window.location.hash = '#authorization'
+    }
+
+    getRegistered();
+}
+
+async function checkSession(authData) {
+    if (!authData) {
+        return;
+    }
+
+    const authObj = JSON.parse(authData);
+    const login = authObj.login;
+    const session = authObj.session;
+
+    return await fetch(`${URL_BACKEND}/authorization?type=session`, {
+        method: 'POST',
+        body: JSON.stringify({login, session})
+    })
+    .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return true;
+        } 
+        
+        throw false;
+    })
+    .catch(res => {
+        localStorage.clear('auth')
+    })
 }
 
 function validation(email) {
@@ -256,6 +490,8 @@ function validation(email) {
 }
 
 function defaultStart() { // Отрисовка всех блоков
+    checkSession(localStorage.auth);
+    getRegistered();
     setTimeArray();
     setHeader();
     createHighterMenu();
@@ -283,6 +519,7 @@ lowerMenu_state.addEventListener('click', (e) => {
     const target = e.target;
     if (target.className.indexOf('low_menu-state-item') === -1) return;
     drawModalWindow(target);
+    console.log(target)
 });
 
 function drawMiniCalendar() {
@@ -306,7 +543,7 @@ function setMiniCalendar(date) {
 
     const name_div = document.createElement('div');
     name_div.classList.add('miniC_name');
-    name_div.innerHTML = `${month} - ${year}`;
+    name_div.innerHTML = `${month} ${year}`;
 
     const data_div = document.createElement('div');
     data_div.classList.add('miniC_data');
@@ -332,6 +569,7 @@ function setMiniCalendar(date) {
         div.classList.add('miniC-item');
 
         if (days.includes(el)) div.classList.add('miniC-day_name');
+        else div.classList.add('miniC-number');
 
         if (cur_date === el) div.classList.add('current_date');
 
@@ -569,7 +807,9 @@ function setModalWindow(name, number, date, time, target) {
         btn.className = 'grey modal_btn';
 
         btn.addEventListener('click', () => {
-            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea, number, date);
+            redirectAuth();
+
+            setModalButton(i, target, modal_input, modal_inputPhone, modal_textArea, number, date, (time ? time : null));
         })
 
         btns_div.appendChild(btn);
@@ -628,7 +868,7 @@ function setModalColor(target, colorName) {
     target.setAttribute('colorData', colorName);
 }
 
-function setModalButton(number, target, input_name, phone, text_area, date_number, date) { // Запоминаем отмеченные кнопки
+function setModalButton(number, target, input_name, phone, text_area, date_number, date, time) { // Запоминаем отмеченные кнопки
     if (number === 0) {
         if (target.innerHTML === '') deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -643,7 +883,7 @@ function setModalButton(number, target, input_name, phone, text_area, date_numbe
         target.classList.remove('hard_own');
         target.innerHTML = input_name.value;
         saveCheckedPins(target, phone, text_area);
-        sendSavedData(target, input_name.value, phone.value, text_area.value, date_number, date.getMonth(), date.getFullYear());
+        sendSavedData(target, input_name.value, phone.value, text_area.value, date_number, date.getMonth(), date.getFullYear(), time);
     } else {
         deleteColor(target);
         modal_win.classList.remove('left_margin');
@@ -655,7 +895,7 @@ function setModalButton(number, target, input_name, phone, text_area, date_numbe
     }
 }
 
-function sendSavedData(target, name, phone, text_area, date_number, month, year) { // Отправлять дфнные в бд
+async function sendSavedData(target, name, phone, text_area, date_number, month, year, time) { // Отправлять дфнные в бд
     const color = target.getAttribute('colordata') || '';
     let toSend = {
        title: name,
@@ -666,8 +906,17 @@ function sendSavedData(target, name, phone, text_area, date_number, month, year)
        month: month,
        year: year
     }
+
+    if (time) {
+        toSend.time = time;
+    }
     toSend = JSON.stringify(toSend);
     console.log(toSend);
+
+    await fetch(`${URL_BACKEND}/event`, {
+        method: 'POST',
+        body: toSend
+    })
 }
 
 function deleteObject(target, indx) { // Удаляет объект менюшки
@@ -794,8 +1043,8 @@ function arrowL() { // Предыдущая неделя
     changePage();
 }
 
-function createHighterState() { // Создание верхних шкал
-    const HIGHTER_STATE_POSITIONS = 28;
+async function createHighterState() { // Создание верхних шкал
+    const HIGHTER_STATE_POSITIONS = AVAILIBLE_LINES * 7;
     highterMenu_state.innerHTML = '';
     let data_number = 0;
     for (let i=0; i<HIGHTER_STATE_POSITIONS; i++) {
@@ -811,6 +1060,131 @@ function createHighterState() { // Создание верхних шкал
         data_number++;
         if (data_number > 6) data_number = 0;
     }
+    const adish_btn = document.createElement('button');
+    adish_btn.classList.add('high_menu_state_btn');
+    adish_btn.innerHTML = 'Добавить Дополнительные ячейки';
+
+    adish_btn.addEventListener('click', () => {
+        createBuyPage(buy_data.add_cell, 1)
+    })
+
+    highterMenu_state.appendChild(adish_btn);
+}
+
+function createBuyPage(text_data, data_mean) {
+    const body = document.querySelector('body');
+    const currentPage = document.querySelector('.head-page');
+    currentPage.classList.add('hide');
+
+    let wrapper;
+    const inner_wrapper = document.querySelector('.dop_wrapper');
+
+    if (inner_wrapper)
+        wrapper = inner_wrapper;
+    else 
+        wrapper = document.createElement('div');
+    
+    wrapper.classList.add('dop_wrapper');
+    wrapper.innerHTML = ''
+
+    const head = document.createElement('div');
+    head.className = `dop_head ${text_data.title.split(':')[1]}`;
+    head.innerHTML = text_data.title.split(':')[0];
+    
+    const adish_body = document.createElement('div');
+    adish_body.className = 'dop_body buy_menu';
+    const head_text = document.createElement('div');
+    head_text.classList.add(text_data.header.split(':')[1]);
+    head_text.innerHTML = text_data.header.split(':')[0];
+    const main_text = document.createElement('div');
+    main_text.classList.add(text_data.main.split(':')[1]);
+    main_text.innerHTML = text_data.main.split(':')[0];
+    const btns_block = document.createElement('div');
+    btns_block.classList.add('buy_menu-btns');
+    btns_block.innerHTML = createBuyMenuButtons();
+    const cancel_btn = document.createElement('button');
+    cancel_btn.classList.add('menu-btns_cancel');
+    cancel_btn.innerHTML = 'Отмена';
+
+    btns_block.appendChild(cancel_btn);
+
+    adish_body.appendChild(head_text);
+    adish_body.appendChild(main_text);
+    adish_body.appendChild(btns_block);
+
+    const footer = document.createElement('div');
+    footer.classList.add('dop_footer');
+    const footer_text = document.createElement('div');
+    footer_text.classList.add(text_data.footer.split(':')[1]);
+    footer_text.innerHTML = text_data.footer.split(':')[0];
+
+    footer.appendChild(footer_text);
+    footer.appendChild(createBuyMenuFooter(data_mean));
+
+    wrapper.appendChild(head);
+    wrapper.appendChild(adish_body);
+    wrapper.appendChild(footer);
+
+    body.append(wrapper);
+
+    cancel_btn.addEventListener('click', () => {
+        getBack(data_mean, wrapper)
+    })
+}
+
+function getBack(data_mean, wrapper) {
+    if (data_mean) {
+        const currentPage = document.querySelector('.head-page');
+        getHeadPage(currentPage)
+    } else {
+        wrapper.innerHTML = '';
+        profilePage();
+    }
+}
+
+function createBuyMenuFooter(data_mean) { 
+    let all_btns = document.createElement('div');
+    all_btns.classList.add('footer_btns')
+    for (let i=0; i<buy_btns.length + 1; i++) {
+        let j = i < 2 ? i : i - 1
+        const btn = document.createElement('div');
+        btn.classList.add('footer_btns-item');
+        if (i === 2) {
+            btn.innerHTML = data_mean ? AVAILIBLE_LINES : AVAILIBLE_PEOPLE;
+            btn.style.color = '#FD79A8'
+            all_btns.appendChild(btn);
+            continue;
+        }
+        btn.innerHTML = `+${buy_btns[j].number}`;
+        btn.style.color = buy_btns[j].color;
+        all_btns.appendChild(btn);
+    }
+
+    return all_btns;
+}
+
+function createBuyMenuButtons() {
+    let all_btns = ''
+    let block1 = ''
+    let block2 = ''
+    for (let i=0; i<buy_btns.length; i++) {
+        const btn = `
+            <div class="menu_btn">
+                <div style="color: ${buy_btns[i].color};" class="menu_btn-number">
+                    +${buy_btns[i].number}
+                </div>
+                <div style="color: ${buy_btns[i].color};" class="menu_btn-average">
+                    ${buy_btns[i].average}
+                </div>
+            </div>
+        `
+        if (i < 2) block1 += btn
+        else block2 += btn
+    }
+    all_btns += `<div class="buy_menu-first">${block1}</div>`;
+    all_btns += `<div class="buy_menu-second">${block2}</div>`;
+    
+    return all_btns;
 }
 
 function createLowerState() { // Создание всех временных шкал
