@@ -1136,7 +1136,7 @@ i {
     flex-wrap: wrap;
     justify-content: space-between;
     row-gap: 10px;
-    margin-bottom: 145px;
+    margin-bottom: 72px;
 }
 
 .profile-photo_item {
@@ -1196,6 +1196,7 @@ i {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
 .profil_btn {
@@ -1206,7 +1207,14 @@ i {
     cursor: pointer;
 }
 
-.profil_delete {
+.profil_buttons-red {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.profil_red {
     border: 1px solid #FF7675;
     color: #FF7675;
 }
@@ -1524,10 +1532,6 @@ i {
         width: 215px;
     }
 
-    .profile-main {
-        margin-bottom: 101px;
-    }
-
     .profile-photo {
         width: 70px;
         height: 70px;
@@ -1542,6 +1546,11 @@ i {
         display: flex;
         row-gap: 20px;
         flex-direction: column-reverse;
+        align-items: unset;
+    }
+
+    .profil_buttons-red {
+        gap: 20px;
     }
     
     .profil_btn {
@@ -1946,11 +1955,11 @@ i {
     .profil-footer {
         flex-direction: column;
         align-items: center;
-        margin-bottom: 60px;
+        margin-bottom: 45px;
     }
 
     .profile-main {
-        margin-bottom: 70px;
+        margin-bottom: 40px;
         flex-direction: column;
         align-items: center;
     }

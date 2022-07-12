@@ -33,6 +33,18 @@ export default function Profile() {
         })
     }
 
+    async function LogOut() {
+
+        await fetch(`${URL_BACKEND}/authorization?type=exit`)
+        .then(res => res.json())
+        .catch(res => console.log(res, 'catch'))
+        .then(res => {
+            alert('Успешный выход')
+            localStorage.clear('auth');
+        })
+
+    }
+
     return (
         <div className="dop_wrapper">
             <div className="dop_head">Профиль</div>
@@ -51,15 +63,18 @@ export default function Profile() {
                         <input type="password" className="profil-pass" placeholder="Пароль" {...register("password", { minLength: 8 })} />
                     </div>
                     <div className="profil-footer">
-                        <Link to="/people-space"><button className="profil_footBtn">Добавить пользователя</button></Link>
+                        <Link className="profil_footBtn" to="/people-space"><button className="profil_footBtn">Добавить пользователя</button></Link>
                         
                         <input type="text" className="profil_footInp" placeholder="Название группы" />
                         <button className="profil_footBtn-list">Посмотреть список вашей группы</button>
                     </div>
                     <div className="profil_buttons">
-                        <button className="profil_btn profil_delete">Удалить профиль</button>
+                        <div className="profil_buttons-red">
+                            <button type="button" onClick={LogOut} className="profil_btn profil_red">Выйти из аккаунта</button>
+                            <button type="button" className="profil_btn profil_red">Удалить профиль</button>
+                        </div>
                         <Link to="/"><button className="profil_btn profil_cancel">Отмена</button></Link>
-                        <button type="submit" className="profil_btn profil_save">Сохранить</button>
+                        <div><button type="submit" className="profil_btn profil_save">Сохранить</button></div>
                     </div>
                 </form>
             </div>
