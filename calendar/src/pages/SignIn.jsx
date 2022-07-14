@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { URL_BACKEND, checkSessionFunc } from '../utils/days_helper';
+import { URL_BACKEND, checkSessionFunc, checkPage } from '../utils/days_helper';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ export default function SignIn() {
     
             localStorage.setItem('auth', JSON.stringify(authorization));
 
-            checkSessionFunc(localStorage.auth)
+            checkPage()
 
             setState({ user: res.login });
         })

@@ -14,8 +14,16 @@ const avability = {
     AVAILIBLE_PEOPLE: 0
 }
 const highterItems = {}
-let header_link = '';
+let header_link = '/login';
 const email_pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+checkPage()
+
+function checkPage() {
+    if (localStorage.getItem('auth')) {
+        header_link = '/profile'
+    } else header_link = '/login'
+}
 
 async function checkSessionFunc(authData) {
     if (!authData) {
@@ -44,6 +52,5 @@ async function checkSessionFunc(authData) {
         localStorage.clear('auth')
     })
 }
-checkSessionFunc(localStorage.auth);
 
-export { days, color_classes, monthes, dates, avability, keyData, highterItems, btns_name, checkSessionFunc, header_link, URL_BACKEND, email_pattern }
+export { days, color_classes, monthes, dates, avability, keyData, highterItems, btns_name, checkSessionFunc, header_link, URL_BACKEND, email_pattern, checkPage }
