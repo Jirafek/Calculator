@@ -26,8 +26,7 @@ export default function Profile() {
             throw res.json();
         })
         .catch(res => {
-            console.log('session canceled')
-            alert(res.message);
+            console.log('catch')
         })
         .then(res => {
             alert('Успешное изменение профиля!');

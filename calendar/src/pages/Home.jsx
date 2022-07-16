@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import HihterMenu from '../components/HihterMenu';
 import LowerMenu from '../components/LowerMenu';
-import { checkSessionFunc } from '../utils/days_helper';
+import { checkSessionFunc, URL_BACKEND } from '../utils/days_helper';
 import { Navigate } from 'react-router-dom';
 
 export default function Home() {
