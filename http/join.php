@@ -1,9 +1,8 @@
 <?
-require_once 'require.php';
 
 $link = protectionData($_GET['link']);
 
-joinLink($_SESSION['user']['user_id'], $link);
+joinLink($user_data['user_id'], $link);
 
 // if ($_SESSION['user']['user_id']) {
 

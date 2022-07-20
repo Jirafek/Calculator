@@ -49,8 +49,12 @@ if ($param[0] === 'group_user') {
 if ($param[0] === 'email') {
     require_once 'email.php';
 }
- 
-if ($param[0] === 'session') {
-    echo json_encode($user_data['user_id']);
+
+if ($param[0] === 'join') {
+    require_once 'join.php'
 }
+ 
+// if ($param[0] === 'session') {
+//     echo json_encode($user_data['user_id']);
+// }
 ?>
