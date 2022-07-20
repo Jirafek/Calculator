@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!empty($id)) {
         getUserInfo($id);
     } else {
-        if ($_SESSION['user']) {
-            getUserInfo($_SESSION['user']['user_id']);
+        if ($user_data) {
+            getUserInfo($user_data['user_id']);
         } else {
             http_response_code(403);
 
@@ -23,11 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$type) {
-        createUserInfo($_POST, $_SESSION['user']['user_id']);
+        createUserInfo($_POST, $user_data['user_id']);
     }
 
     if ($type === 'edit_avatar') {
-        editAvatar($_SESSION['user']['user_id'], $_FILES);
+        editAvatar($user_data['user_id'], $_FILES);
     }
 }
 

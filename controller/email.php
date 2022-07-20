@@ -9,8 +9,7 @@ class EmailCode {
 
         $email = protectionData($email);
 
-        $_SESSION['confirm']['email'] = $email;
-        $_SESSION['confirm']['code'] = random_int(10000, 99999);
+        setcookie('email_code', random_int(10000, 99999), time() + 60*10);
 
         $to      = "$email";
         $subject = 'Восстановление пароля';
@@ -25,11 +24,11 @@ class EmailCode {
     static public function confirm($email, $code) {
         $state = true;
 
-        if ($_SESSION['confirm']['email'] !== $email) {
+        if ($_COOKIE['email_code'] !== $email) {
             $state = false;
         }
 
-        if ($_SESSION['confirm']['code'] !== $code) {
+        if ($_COOKIE['email_code'] !== $code) {
             $state = false;
         }
 

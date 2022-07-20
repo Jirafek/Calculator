@@ -2,6 +2,12 @@
 require_once '../require.php';
 require_once 'vars.php';
 
+$authorization_token = getallheaders()["Authorization"];
+
+if ($authorization_token) {
+    $user_data = Globals::getData('user', 'session', $authorization_token);
+}
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *, Authorization');
 header('Access-Control-Allow-Methods: *');
@@ -44,7 +50,7 @@ if ($param[0] === 'email') {
     require_once 'email.php';
 }
  
-// if ($param[0] === 'session') {
-//     echo json_encode($_SESSION['user']);
-// }
+if ($param[0] === 'session') {
+    echo json_encode($user_data['user_id']);
+}
 ?>

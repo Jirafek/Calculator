@@ -5,11 +5,11 @@ $type = $_GET['type'];
 if ($_SERVER['REQUEST_METHOD'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'PATCH') {
 
     if ($type === 'edit_passsword') {
-        editPassword($_SESSION['user']['user_id'], $_POST);
+        editPassword($user_data['user_id'], $_POST);
     }
     
     if ($type === 'personal_data') {
-        editPersonalData($_SESSION['user']['user_id'], $_POST);
+        editPersonalData($user_data['user_id'], $_POST);
     }
 }
 
