@@ -2,7 +2,7 @@
 require_once '../require.php';
 require_once 'vars.php';
 
-$authorization_token = getallheaders()["Authorization"];
+$authorization_token = getallheaders()['Token'];
 
 if ($authorization_token) {
     $user_data = Globals::getData('user', 'session', $authorization_token);
@@ -51,10 +51,10 @@ if ($param[0] === 'email') {
 }
 
 if ($param[0] === 'join') {
-    require_once 'join.php'
+    require_once 'join.php';
 }
  
-// if ($param[0] === 'session') {
-//     echo json_encode($user_data['user_id']);
-// }
+//  if ($param[0] === 'session') {
+//      echo json_encode($user_data);
+//  }
 ?>
