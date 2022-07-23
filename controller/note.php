@@ -3,7 +3,7 @@ function createNote($data, $author_id, $group_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
 
-    $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'];
+    $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'] ? Globals::getData('group_user', 'user_id', $author_id)['user_access'] : 4;
     
     $title = $data['title'];
     $description = $data['description'];
@@ -113,6 +113,8 @@ function getNotes($user_id, $group_id, $where_param, $limit, $offset) {
 function updateNote($data, $note_id, $author_id, $group_id) {
     $data = file_get_contents('php://input');
     $data = json_decode($data, true);
+
+    $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'] ? Globals::getData('group_user', 'user_id', $author_id)['user_access'] : 4;
     
     $title = $data['title'];
     $description = $data['description'];
@@ -136,6 +138,12 @@ function updateNote($data, $note_id, $author_id, $group_id) {
         http_response_code(401);
 
         $errors[] = 'Не пройдена авторизация';
+    }
+
+    if ($get_access < 2) {
+        http_response_code(403);
+
+        $errors[] = 'Нет доступа';
     }
 
     if (!empty($errors)) {
@@ -168,12 +176,20 @@ function updateNote($data, $note_id, $author_id, $group_id) {
 }
 
 function deleteNote($note_id, $author_id, $group_id) {
+    $get_access = Globals::getData('group_user', 'user_id', $author_id)['user_access'] ? Globals::getData('group_user', 'user_id', $author_id)['user_access'] : 4;
+
     $errors = [];
 
     if (!$author_id) {
         http_response_code(401);
 
         $errors[] = 'Не пройдена авторизация';
+    }
+
+    if ($get_access < 2) {
+        http_response_code(403);
+
+        $errors[] = 'Нет доступа';
     }
 
     if (!empty($errors)) {
