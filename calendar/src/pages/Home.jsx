@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import HihterMenu from '../components/HihterMenu';
 import LowerMenu from '../components/LowerMenu';
-import { checkSessionFunc, URL_BACKEND } from '../utils/days_helper';
+import { URL_BACKEND, dates, days } from '../utils/days_helper';
 import { Navigate } from 'react-router-dom';
 
 export default function Home() {
+    const [pageState, setPageState] = useState(null);
+
     const [state, setState] = useState({
         window: null,
         calendar: null,
@@ -37,20 +39,31 @@ export default function Home() {
         }
     }
 
+    function nextPage() {
+        const date = dates.lastDate;
+        setPageState(date)
+    }
+
+    function prevPage() {
+        const date = dates.firstDate;
+        date.setDate(date.getDate() - 8);
+        setPageState(date)
+    }
+
     return (
         <>
         {!localStorage.getItem('auth') && (
             <Navigate to="/login" replace={true} />
         )}
-            <Header updateState={updateState} />
+            <Header updateState={updateState} updatePageState={setPageState} />
             <div className="wrapper">
                 <div className="arrows">
-                    <i className="arrow_left"></i>
-                    <i className="arrow_right"></i>
+                    <i onClick={prevPage} className="arrow_left"></i>
+                    <i onClick={nextPage} className="arrow_right"></i>
                 </div>
                 <div className={`modal_window ${state.winClass}`}>{state.window}</div>
                 <div className={`modal_calendar ${state.calClass}`}>{state.calendar}</div>
-                <HihterMenu updateState={updateState} />
+                <HihterMenu date={pageState} updateState={updateState} />
                 <LowerMenu updateState={updateState} />
             </div>
         </>

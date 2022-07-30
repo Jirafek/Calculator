@@ -6,7 +6,7 @@ const monthes = ['Январь', 'Февраль', 'Март', 'Апрель', '
 const btns_name = ['Отмена', 'Сохранить', 'Удалить'];
 const dates = {
     firstDate: new Date(),
-    lastDate: new Date()
+    lastDate: null
 }
 const keyData = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 const avability = {
@@ -53,4 +53,96 @@ async function checkSessionFunc(authData) {
     })
 }
 
-export { days, color_classes, monthes, dates, avability, keyData, highterItems, btns_name, checkSessionFunc, header_link, URL_BACKEND, email_pattern, checkPage }
+async function getEventsHeader(year, updateState) {
+    if (header_link === '/login') return;
+    const log = localStorage.getItem('auth');
+    const session = JSON.parse(log).session;
+
+    await fetch(`${URL_BACKEND}/note`, {
+        method: "GET",
+        headers: {
+            'Token': session
+        }
+    })
+    .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.json();
+        } 
+
+        throw res.json();
+    }).then(res => {
+        updateState(res)
+    })
+}
+
+async function getEvents(year, updateState) {
+    if (header_link === '/login') return;
+    const log = localStorage.getItem('auth');
+    const session = JSON.parse(log).session;
+
+    await fetch(`${URL_BACKEND}/event/limit=year=${year}`, {
+        method: "GET",
+        headers: {
+            'Token': session
+        }
+    })
+    .then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.json();
+        } 
+
+        throw res.json();
+    }).then(res => {
+        console.log(res)
+        updateState(res)
+    })
+}
+
+async function isSectionAlive(auth) {
+
+    const authObj = JSON.parse(auth);
+    const session = authObj.session;
+
+    return await fetch(`${URL_BACKEND}/session`, {
+        header: {
+            'Token': session
+        }
+    }).then(res => res.json()).then(res => {
+        return res;
+    })
+}
+
+function clearEvent() {
+    eventSend = {}
+}
+
+let eventSend = {
+    title: '',
+    description: '',
+    phone: '',
+    color: '',
+    day: null,
+    month: null,
+    year: null,
+    time: ''
+}
+
+export { 
+        days, color_classes, 
+        monthes, 
+        dates, 
+        avability, 
+        keyData, 
+        highterItems, 
+        btns_name, 
+        checkSessionFunc, 
+        header_link, 
+        URL_BACKEND, 
+        email_pattern, 
+        checkPage, 
+        isSectionAlive,
+        eventSend,
+        getEvents,
+        getEventsHeader,
+        clearEvent
+    }

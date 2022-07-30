@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { URL_BACKEND, checkSessionFunc, checkPage } from '../utils/days_helper';
+import { URL_BACKEND, checkSessionFunc, checkPage, isSectionAlive } from '../utils/days_helper';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -28,6 +28,8 @@ export default function SignIn() {
         .then(res => {
             alert(res.message);
     
+            console.log(res)
+
             const authorization = {
                 login: res.login,
                 session: res.session
@@ -36,6 +38,8 @@ export default function SignIn() {
             localStorage.setItem('auth', JSON.stringify(authorization));
 
             checkPage()
+
+            isSectionAlive(JSON.stringify(authorization))
 
             setState({ user: res.login });
         })

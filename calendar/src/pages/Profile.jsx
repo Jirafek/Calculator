@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { URL_BACKEND, checkSessionFunc, checkPage } from '../utils/days_helper';
+import { URL_BACKEND, checkSessionFunc, checkPage, isSectionAlive } from '../utils/days_helper';
 import { Navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -14,9 +14,16 @@ export default function Profile() {
 
         console.log(JSON.stringify(data))
 
+        const log = localStorage.getItem('auth');
+        const session = JSON.parse(log).session;
+        console.log(session);
+
         await fetch(`${URL_BACKEND}/user?type=personal_data`, {
             method: 'PUT',
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            headers: {
+                'Token': session
+            }
         })
         .then(res => {
             if (res.status >= 200 && res.status < 300) {
@@ -24,12 +31,8 @@ export default function Profile() {
             } 
     
             throw res.json();
-        })
-        .catch(res => {
-            console.log('catch')
-        })
-        .then(res => {
-            alert('Успешное изменение профиля!');
+        }).then(res => {
+            alert(res.message);
             localStorage.clear('auth');
             setState({ res: res });
             checkPage();

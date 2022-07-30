@@ -1,8 +1,15 @@
-import React from 'react';
+/* eslint-disable no-loop-func */
+import React, { useState, useEffect } from 'react';
 import RandomKey from './RandomKey';
+import { eventSend, highterItems, getEvents } from '../utils/days_helper';
 import ModalWindow from './ModalWindow';
 
 export default function LowerMenu(params) {
+    const [dataState, setDataState] = useState(null);
+
+    useEffect(() => {
+        getEvents(highterItems[0].date.getFullYear(), setDataState)
+    }, [])
 
     function setTimeArray() {
         const GORIZONTAL_BLOCKS = 48;
@@ -36,7 +43,42 @@ export default function LowerMenu(params) {
                 default_time = time_array[0];
             }
 
-            const div = <div key={RandomKey()} dataname={`low-${i}`} day={data_number} time={default_time} className={`grey low_menu-state-item low-${i}`}></div>
+            const className = `grey low_menu-state-item low-${i}`;
+
+            const date = highterItems[data_number].date;
+            const year = date.getFullYear();
+            const day = highterItems[data_number].number;
+            const month = date.getMonth();
+
+            let div = null;
+
+            if (dataState) {
+                dataState.forEach((el, j) => {
+                    if (
+                        +el.day === day && +el.year === year && +el.month === month && el.time === default_time
+                    ) {
+                        div = <div key={RandomKey()}
+                         dataname={`low-${i}`}
+                         id={el.event_id}
+                         day={data_number} 
+                         title={el.title}
+                         description={el.description}
+                         phone={el.phone}
+                         className={`${el.color} ${className}`}
+                        >
+                            {el.title}
+                        </div>
+                    }
+                })
+                if (!div) div = <div key={RandomKey()} dataname={`low-${i}`} day={data_number} time={default_time} 
+                className={className}>
+            </div>
+            } else {
+                div = <div key={RandomKey()} dataname={`low-${i}`} day={data_number} time={default_time} 
+                className={className}>
+            </div>
+            }
+
             array.push(div);
 
             if ((i + 1) % 7 === 0 && (i + 1) !== 336) {
@@ -59,7 +101,19 @@ export default function LowerMenu(params) {
         const day = +target.getAttribute('day');
         const time = target.getAttribute('time');
 
-        params.updateState(<ModalWindow day={day} time={time} updateSatate={params.updateState}/>, 'window', 'left_margin');
+        const targetData = {
+            description: target.getAttribute('description') || '',
+            title: target.getAttribute('title') || '',
+            phone: target.getAttribute('phone') || '',
+            id: target.getAttribute('id') || '',
+        }
+
+        eventSend.day = highterItems[day].number;
+        eventSend.time = time;
+        eventSend.month = highterItems[day].date.getMonth();
+        eventSend.year = highterItems[day].date.getFullYear();
+
+        params.updateState(<ModalWindow day={day} time={time} targetData={targetData} updateSatate={params.updateState}/>, 'window', 'left_margin');
     }
 
     return (

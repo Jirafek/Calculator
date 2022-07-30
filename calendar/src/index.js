@@ -7,13 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <LazyMotion features={domAnimation} strict>
-      <Suspense fallback={<img src="./gif/loading.gif" className="loading_gif" alt="Loading"/>}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Suspense>
-    </LazyMotion>
-  </React.StrictMode>
+  <LazyMotion features={domAnimation} strict>
+    <Suspense fallback={<img src="./gif/loading.gif" className="loading_gif" alt="Loading"/>}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Suspense>
+  </LazyMotion>
 );

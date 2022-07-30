@@ -23,7 +23,7 @@ export default function Header(props) {
                     </div>
                 </div>
                 <div className="header-menu">
-                    <button className="menu_today d-h grey">Сегодня</button>
+                    <button onClick={() => props.updatePageState(null)} className="menu_today d-h grey">Сегодня</button>
                     <div className="menu_day d-h grey">{days[new Date().getDay()]}</div>
                     <div className="menu_number d-h grey">{new Date().getDate()}</div>
                     <div className="menu_full d-h grey">
